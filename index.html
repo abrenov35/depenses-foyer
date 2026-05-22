@@ -500,7 +500,8 @@ function renderHome(){
   // 12 mois glissants pour moyenne
   const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y})}
   const slTotal=depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
-  const moy=slTotal/12;
+  const moisActifs=new Set(depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
+  const moy=moisActifs>0?slTotal/moisActifs:0;
 
   // Mois précédent
   const prev=getPrevMonth();
@@ -516,7 +517,8 @@ function renderHome(){
   document.getElementById('cat-cards').innerHTML=CATS.map(cat=>{
     const v=md.filter(d=>d.cat===cat.id).reduce((s,d)=>s+d.montant,0);
     const slv=depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
-    const moyC=slv/12,pct=maxCat>0?Math.round((v/maxCat)*100):0,dif=v-moyC;
+    const moisActifsCat=new Set(depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
+    const moyC=moisActifsCat>0?slv/moisActifsCat:0,pct=maxCat>0?Math.round((v/maxCat)*100):0,dif=v-moyC;
     return`<div class="cat-card" style="border-left-color:${cat.color}" onclick="quickSelectCat('${cat.id}')">
       <div class="cc-name" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
       <div class="cc-amount" style="color:${cat.color}">${v>0?fmtS(v):'—'}</div>
@@ -604,13 +606,14 @@ function renderAnnee(){
   document.getElementById('year-lbl').textContent=selYear;
   const prev=selYear-1,total=ty(selYear),totalP=ty(prev);
   document.getElementById('year-total').textContent=fmt(total);
-  document.getElementById('year-total-sub').textContent=compareMode?`vs ${prev} : ${diff(total,totalP).replace(/<[^>]+>/g,'')}`:`Moy/mois : ${fmtS(total/12)}`;
+  const moisActifsAn=new Set(depenses.filter(d=>d.year===selYear).map(d=>d.month)).size||1;
+  document.getElementById('year-total-sub').textContent=compareMode?`vs ${prev} : ${diff(total,totalP).replace(/<[^>]+>/g,'')}`:`Moy/mois (sur ${moisActifsAn} mois) : ${fmtS(total/moisActifsAn)}`;
   document.getElementById('year-cards').innerHTML=CATS.map(cat=>{
     const v=sy(cat.id,null,selYear),vp=sy(cat.id,null,prev);
     return`<div class="year-card" style="border-top-color:${cat.color}">
       <div class="yc-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
       <div class="yc-amount" style="color:${cat.color}">${fmtS(v)}</div>
-      <div class="yc-moy">Moy/mois : ${fmtS(v/12)}</div>
+      <div class="yc-moy">Moy/mois : ${fmtS(moisActifsAn>0?v/moisActifsAn:0)}</div>
       ${compareMode&&vp>0?`<div class="yc-cmp">${diff(v,vp)} vs ${prev}<br><span style="color:var(--text3)">${prev} : ${fmtS(vp)}</span></div>`:''}
     </div>`;
   }).join('');
@@ -661,15 +664,16 @@ function renderGlissant(){
   document.getElementById('glissant-period').textContent=`${MFR[f.m]} ${f.y} → ${MFR[l.m]} ${l.y}`;
   const inSl=d=>sl.some(s=>s.m===d.month&&s.y===d.year);
   const grand=depenses.filter(inSl).reduce((s,d)=>s+d.montant,0);
+  const moisActifsGl=new Set(depenses.filter(inSl).map(d=>d.year+'-'+d.month)).size||1;
   document.getElementById('glissant-total').textContent=fmt(grand);
-  document.getElementById('glissant-moy-lbl').textContent='Moyenne mensuelle : '+fmt(grand/12);
+  document.getElementById('glissant-moy-lbl').textContent=`Moyenne mensuelle (sur ${moisActifsGl} mois) : `+fmt(grand/moisActifsGl);
   document.getElementById('glissant-grid').innerHTML=CATS.map(cat=>{
     const total=depenses.filter(d=>d.cat===cat.id&&inSl(d)).reduce((s,d)=>s+d.montant,0);
     return`<div class="glissant-card" style="border-top-color:${cat.color}">
       <div class="card-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
       <div class="card-amount" style="color:${cat.color}">${fmtS(total)}</div>
       <div class="card-sub">sur 12 mois</div>
-      <div class="card-moy">Moy/mois : <strong>${fmtS(total/12)}</strong></div>
+      <div class="card-moy">Moy/mois : <strong>${fmtS(new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size>0?total/new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size:0)}</strong></div>
     </div>`;
   }).join('');
   let h='<table><thead><tr><th>Catégorie</th>';
@@ -680,11 +684,12 @@ function renderGlissant(){
     h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
     let rs=0;
     sl.forEach((s,si)=>{const v=depenses.filter(d=>d.cat===cat.id&&d.month===s.m&&d.year===s.y).reduce((a,d)=>a+d.montant,0);rs+=v;mT[si]+=v;h+=`<td class="${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-    h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/12)}</td></tr>`;
+    const moisActifsCatGl=new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size||1;
+    h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisActifsCatGl)}</td></tr>`;
   });
   h+='<tr class="total-row"><td>💰 TOTAL</td>';
   mT.forEach(v=>{h+=`<td>${fmtS(v)}</td>`});
-  h+=`<td>${fmtS(grand)}</td><td>${fmtS(grand/12)}</td></tr></tbody></table>`;
+  h+=`<td>${fmtS(grand)}</td><td>${fmtS(grand/moisActifsGl)}</td></tr></tbody></table>`;
   document.getElementById('glissant-table').innerHTML=h;
 }
 
