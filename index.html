@@ -349,6 +349,7 @@ const CATS=[
   {id:'divers',   label:'Divers',    icon:'📦', color:'#475569', postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux']},
   {id:'clemence', label:'Clémence',  icon:'👩🏽', color:'#A495C3', postes:['Clémence'], noPoste:true},
   {id:'epargne',  label:'Épargne',   icon:'💰', color:'#d97706', postes:['Épargne'],   noPoste:true},
+  {id:'abrenov',  label:'AB Renov',  icon:'🔨', color:'#b45309', postes:['AB Renov'],  noPoste:true},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -479,7 +480,7 @@ function renderPostes(){
 
   const recents=getRecents(selCat);
   const basePostes=cat.postes.filter(p=>p!=='Autre');
-  const displayed=[...new Set([...recents.filter(p=>p!=='Autre'),...basePostes])].slice(0,6);
+  const displayed=[...new Set([...recents.filter(p=>p!=='Autre'),...basePostes])].slice(0,12);
   if(!displayed.includes('Autre'))displayed.push('Autre');
   if(!selPoste||!displayed.includes(selPoste))selPoste=displayed[0]||cat.postes[0];
   const col=cat.color;
