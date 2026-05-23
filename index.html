@@ -37,16 +37,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .loader-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* COCKPIT */
-.cockpit{background:var(--text);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow-lg);color:#f4f1ec}
-.cockpit-hero{margin-bottom:14px}
-.cockpit-hero .ch-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#a89e93;margin-bottom:2px}
-.cockpit-hero .ch-amount{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:var(--accent);line-height:1}
-.cockpit-hero .ch-month{font-size:12px;color:#a89e93;margin-top:3px}
-.cockpit-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cs-card{background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px}
-.cs-card .cs-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#f4f1ec}
-.cs-card .cs-lbl{font-size:10px;color:#a89e93;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* COCKPIT COMPACT */
+.cockpit{background:var(--text);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:0;overflow:hidden;color:#f4f1ec}
+.ck-main{flex:1.4;padding-right:14px;border-right:1px solid rgba(255,255,255,.1)}
+.ck-main .ck-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#a89e93;margin-bottom:1px}
+.ck-main .ck-amount{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;color:var(--accent);line-height:1}
+.ck-main .ck-month{font-size:11px;color:#a89e93;margin-top:2px}
+.ck-stats{flex:1;display:flex;flex-direction:column;gap:8px;padding-left:14px}
+.ck-stat{display:flex;flex-direction:column}
+.ck-stat .ck-sv{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#f4f1ec;line-height:1}
+.ck-stat .ck-sl{font-size:9px;color:#a89e93;text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+.ck-stat-sep{height:1px;background:rgba(255,255,255,.07)}
 
 /* MOIS NAV */
 .month-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -56,7 +58,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* SAISIE */
 .quick-entry{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .qe-cats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
-.qe-cat{padding:9px 4px;text-align:center;cursor:pointer;transition:background .15s;font-size:10px;font-weight:500;color:var(--text2);border-right:1px solid var(--border);line-height:1.3}
+.qe-cat{padding:9px 4px;text-align:center;cursor:pointer;transition:background .15s;font-size:10px;font-weight:600;color:#2a2520;border-right:1px solid var(--border);line-height:1.3;background:#fff}
 .qe-cat:last-child{border-right:none}
 .qe-cat .qc-icon{font-size:16px;display:block;margin-bottom:2px}
 .qe-cat.active{color:#fff;font-weight:600}
@@ -64,13 +66,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .qe-body{padding:14px}
 .qe-poste-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:5px;font-weight:600}
 .qe-postes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qe-poste-btn{padding:5px 11px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap}
+.qe-poste-btn{padding:5px 11px;border-radius:100px;border:2px solid #c8c0b4;background:#f0ece4;cursor:pointer;font-size:12px;font-weight:600;color:#1e1a14;transition:all .15s;white-space:nowrap}
 .qe-poste-btn.active{color:#fff;border-color:transparent;font-weight:600}
 .qe-poste-btn.recent::before{content:'★ ';font-size:9px;opacity:.7}
 
 .qe-montant-row{display:flex;gap:9px;align-items:center;margin-bottom:9px}
 .qe-montant-wrap{flex:1;position:relative}
-.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--text);background:var(--surface2);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2.5px solid #b8b0a4;border-radius:var(--r-sm);font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#1a1610;background:#f8f4ee;outline:none;transition:border-color .2s;-webkit-appearance:none}
 .qe-montant-wrap input:focus{border-color:var(--accent);background:#fff}
 .qe-montant-wrap .euro{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:17px;color:var(--text3);font-family:'Cormorant Garamond',serif}
 .btn-valider{background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 12px rgba(193,127,58,.4);transition:all .15s}
@@ -182,21 +184,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- HOME -->
 <div class="page active" id="page-home">
 
-  <!-- COCKPIT 3 stats -->
+  <!-- COCKPIT COMPACT -->
   <div class="cockpit">
-    <div class="cockpit-hero">
-      <div class="ch-label">Ce mois</div>
-      <div class="ch-amount" id="ck-mois">—</div>
-      <div class="ch-month" id="ck-month-name"></div>
+    <div class="ck-main">
+      <div class="ck-label">Ce mois</div>
+      <div class="ck-amount" id="ck-mois">—</div>
+      <div class="ck-month" id="ck-month-name"></div>
     </div>
-    <div class="cockpit-stats">
-      <div class="cs-card">
-        <div class="cs-val" id="ck-moy">—</div>
-        <div class="cs-lbl">Moyenne / mois</div>
+    <div class="ck-stats">
+      <div class="ck-stat">
+        <div class="ck-sv" id="ck-moy">—</div>
+        <div class="ck-sl">Moyenne / mois</div>
       </div>
-      <div class="cs-card">
-        <div class="cs-val" id="ck-prev">—</div>
-        <div class="cs-lbl" id="ck-prev-lbl">Mois précédent</div>
+      <div class="ck-stat-sep"></div>
+      <div class="ck-stat">
+        <div class="ck-sv" id="ck-prev">—</div>
+        <div class="ck-sl" id="ck-prev-lbl">Mois précédent</div>
       </div>
     </div>
   </div>
@@ -215,9 +218,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="qe-body">
       <div class="qe-poste-label">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
+      <div style="font-size:11px;color:#8a8078;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
-          <input type="number" id="f-montant" placeholder="0" min="0" step="0.01" inputmode="decimal">
+          <input type="number" id="f-montant" placeholder="0" step="0.01" inputmode="decimal">
           <span class="euro">€</span>
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
@@ -314,14 +318,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOVCNSyFGDpA3kWDjSmoKIbxTOcc5Xa6r7DIcD9_Tdf7rfDE/exec';
 
 const CATS=[
-  {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Nettoyage','Mobilier','Décoration','Outillage','Petit électroménager']},
+  {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager']},
   {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Gaz','Fioul','Bois / Pellets','Internet / Box','Téléphone fixe','Téléphone mobile']},
   {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Livraison repas','Cave / Boissons']},
   {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#3a7fa8',postes:['Streaming','Musique','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties']},
   {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
   {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Animaux','Tabac','Autres']},
-  {id:'epargne',  label:'Épargne',   icon:'🏦',color:'#2e7d9a',postes:['Livret A / LDDS','Assurance vie','PEA / Bourse','Plan Épargne Retraite','Épargne logement (PEL/CEL)','Impôt sur le revenu','Taxe d\'habitation','Autres placements']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Clémence']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -446,7 +450,7 @@ async function addDepense(){
   const note=document.getElementById('f-note').value.trim();
   const dateVal=document.getElementById('f-date').value||new Date().toISOString().split('T')[0];
   const poste=selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
-  if(!montant||montant<=0){
+  if(isNaN(montant)||montant===0){
     document.getElementById('f-montant').style.borderColor='#c0392b';
     document.getElementById('f-montant').focus();
     setTimeout(()=>document.getElementById('f-montant').style.borderColor='',1500);return;
@@ -462,7 +466,8 @@ async function addDepense(){
     document.getElementById('f-montant').value='';
     document.getElementById('f-note').value='';
     const cat=CATS.find(c=>c.id===selCat);
-    toast(`✓ ${cat.icon} ${poste} — ${fmt(montant)}`);
+    const prefix=montant<0?'↩️ Remboursement':'✓';
+    toast(`${prefix} ${cat.icon} ${poste} — ${fmt(montant)}`);
     renderHome();renderPostes();
   }catch(e){toast('⚠️ Erreur enregistrement')}
   btn.disabled=false;btn.textContent='✓ OK';
@@ -545,7 +550,7 @@ function renderHome(){
           <div class="dep-item-poste">${d.poste}</div>
           <div class="dep-item-meta">${fmtDate(d.date)}${d.note?' · '+d.note:''}</div>
         </div>
-        <div class="dep-item-amount" style="color:${cat.color}">${fmt(d.montant)}</div>
+        <div class="dep-item-amount" style="color:${d.montant<0?'#c0392b':cat.color}">${d.montant<0?'↩️ ':''} ${fmt(d.montant)}</div>
         <button class="dep-item-del" onclick="deleteDepense('${d.id}')">×</button>`;
       sec.appendChild(item);
     });
