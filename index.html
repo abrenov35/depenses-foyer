@@ -261,17 +261,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 </div>
 
-<!-- RECAP -->
-<div class="page" id="page-recap">
-  <div class="section-title">Récapitulatif</div>
-  <p class="section-sub">Tous les postes · tous les mois</p>
-  <div class="recap-tabs">
-    <button class="recap-tab active" onclick="showRecapView('cats',this)">Par catégorie</button>
-    <button class="recap-tab" onclick="showRecapView('postes',this)">Par poste</button>
-  </div>
-  <div class="recap-table" id="recap-container"></div>
-</div>
-
 <!-- ANNÉE -->
 <div class="page" id="page-annee">
   <div class="section-title">Vue par année</div>
@@ -298,6 +287,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 </div>
 
+<!-- ANNÉE PAR CATÉGORIE -->
+<div class="page" id="page-anneecats">
+  <div class="section-title">Par catégorie</div>
+  <p class="section-sub">Détail annuel · tous les mois</p>
+  <div class="year-nav">
+    <div class="year-sel">
+      <button onclick="changeYearCats(-1)">‹</button>
+      <div class="year-lbl" id="yearcats-lbl"></div>
+      <button onclick="changeYearCats(1)">›</button>
+    </div>
+  </div>
+  <div class="recap-table" id="anneecats-table"></div>
+</div>
+
 <!-- NAV BAS -->
 <nav class="bottom-nav">
   <button class="bnav-btn active" onclick="showPage('home',this)">
@@ -319,20 +322,20 @@ const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOV
 
 const CATS=[
   {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager']},
-  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Gaz','Fioul','Bois / Pellets','Internet / Box','Téléphone fixe','Téléphone mobile']},
-  {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Livraison repas','Cave / Boissons']},
+  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Internet / Box','Téléphone fixe','Téléphone mobile']},
+  {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Cave / Boissons']},
   {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#3a7fa8',postes:['Streaming','Musique','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties']},
   {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
-  {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Animaux','Tabac','Autres']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Clémence']},
+  {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Total']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 const MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 
 let curMonth=new Date().getMonth(),curYear=new Date().getFullYear();
-let selYear=new Date().getFullYear(),anneeView='cats',recapView='cats';
+let selYear=new Date().getFullYear(),anneeView='cats';
 let selCat='alim',selPoste='';
 let depenses=[],cbN=0,optsOpen=false;
 
@@ -373,15 +376,14 @@ function showPage(p,btn){
   document.querySelectorAll('.bnav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(p==='recap')renderRecap();
   if(p==='annee')renderAnnee();
+  if(p==='anneecats')renderAnneeCats();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function changeMonth(d){curMonth+=d;if(curMonth<0){curMonth=11;curYear--}if(curMonth>11){curMonth=0;curYear++}renderHome()}
 function changeYear(d){selYear+=d;renderAnnee()}
 function showAnneeView(v,btn){anneeView=v;document.querySelectorAll('#page-annee .recap-tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderAnneeTable()}
-function showRecapView(v,btn){recapView=v;document.querySelectorAll('#page-recap .recap-tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderRecap()}
 
 function toggleOpts(){
   optsOpen=!optsOpen;
@@ -570,40 +572,51 @@ function getMonths(){
   return[...s].sort();
 }
 
-function renderRecap(){
-  const months=getMonths(),cYM=curYear+'-'+String(curMonth).padStart(2,'0');
-  const sum=(ci,po,ym)=>{const[y,m]=ym.split('-').map(Number);return depenses.filter(d=>d.cat===ci&&(!po||d.poste===po)&&d.month===m&&d.year===y).reduce((s,d)=>s+d.montant,0)};
-  const mTot=ym=>{const[y,m]=ym.split('-').map(Number);return depenses.filter(d=>d.month===m&&d.year===y).reduce((s,d)=>s+d.montant,0)};
-  let h='<table><thead><tr><th>Poste</th>';
-  months.forEach(ym=>{const[y,m]=ym.split('-').map(Number);const a=ym===cYM;h+=`<th style="${a?'background:var(--accent)':''}">${MS[m]}<br><span style="font-size:9px;opacity:.7">${y}</span></th>`});
-  h+='<th style="background:#4a4a4a">Cumul</th></tr></thead><tbody>';
-  CATS.forEach(cat=>{
-    if(recapView==='cats'){
-      let rs=0;h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
-      months.forEach(ym=>{const v=sum(cat.id,null,ym);rs+=v;const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-      h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td></tr>`;
-    }else{
-      h+=`<tr class="cat-row"><td colspan="${months.length+2}" style="background:${cat.color}">${cat.icon} ${cat.label}</td></tr>`;
-      cat.postes.forEach(poste=>{
-        let rs=0,has=false;
-        const cells=months.map(ym=>{const v=sum(cat.id,poste,ym);rs+=v;if(v>0)has=true;return{v,ym}});
-        if(!has)return;
-        h+=`<tr><td style="padding-left:16px;font-size:11px">${poste}</td>`;
-        cells.forEach(({v,ym})=>{const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-        h+=`<td style="font-weight:600">${fmtS(rs)}</td></tr>`;
-      });
-    }
-  });
-  h+='<tr class="total-row"><td>💰 TOTAL</td>';
-  let ann=0;months.forEach(ym=>{const v=mTot(ym);ann+=v;h+=`<td>${fmtS(v)}</td>`});
-  h+=`<td>${fmtS(ann)}</td></tr></tbody></table>`;
-  document.getElementById('recap-container').innerHTML=h;
-}
 
 const sy=(ci,po,y)=>depenses.filter(d=>d.year===y&&d.cat===ci&&(!po||d.poste===po)).reduce((s,d)=>s+d.montant,0);
 const sym=(ci,po,y,m)=>depenses.filter(d=>d.year===y&&d.month===m&&d.cat===ci&&(!po||d.poste===po)).reduce((s,d)=>s+d.montant,0);
 const ty=y=>depenses.filter(d=>d.year===y).reduce((s,d)=>s+d.montant,0);
 function diff(n,p){if(!p)return'';const d=n-p,pct=Math.round((d/p)*100);if(d>0)return`<span class="up">▲${pct}%</span>`;if(d<0)return`<span class="down">▼${Math.abs(pct)}%</span>`;return`<span class="eq">=</span>`}
+
+let selYearCats=new Date().getFullYear();
+function changeYearCats(d){selYearCats+=d;renderAnneeCats()}
+
+function renderAnneeCats(){
+  document.getElementById('yearcats-lbl').textContent=selYearCats;
+  const moisActifs=new Set(depenses.filter(d=>d.year===selYearCats).map(d=>d.month)).size||1;
+  let h='<table><thead><tr><th>Catégorie / Poste</th>';
+  MS.forEach((m,i)=>{const isc=selYearCats===curYear&&i===curMonth;h+=`<th style="${isc?'background:var(--accent)':''}">${m}</th>`});
+  h+='<th style="background:#4a4a4a">Total</th><th style="background:#4a4a4a">Moy</th></tr></thead><tbody>';
+  let mT=new Array(12).fill(0);
+  CATS.forEach(cat=>{
+    // Ligne catégorie
+    let rs=0;
+    const rowCells=Array.from({length:12},(_,m)=>{
+      const v=sym(cat.id,null,selYearCats,m);rs+=v;mT[m]+=v;
+      const isc=selYearCats===curYear&&m===curMonth;
+      return`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`;
+    }).join('');
+    const moisC=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.month)).size||1;
+    h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>${rowCells}<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisC)}</td></tr>`;
+    // Lignes postes
+    const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.poste))];
+    postesUtilises.forEach(poste=>{
+      let prs=0;
+      const pcells=Array.from({length:12},(_,m)=>{
+        const v=sym(cat.id,poste,selYearCats,m);prs+=v;
+        const isc=selYearCats===curYear&&m===curMonth;
+        return`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`;
+      }).join('');
+      const moisP=new Set(depenses.filter(d=>d.cat===cat.id&&d.poste===poste&&d.year===selYearCats).map(d=>d.month)).size||1;
+      h+=`<tr><td style="padding-left:18px;font-size:11px;color:var(--text2)">${poste}</td>${pcells}<td style="font-weight:600">${fmtS(prs)}</td><td style="color:var(--text3)">${fmtS(prs/moisP)}</td></tr>`;
+    });
+  });
+  const tA=mT.reduce((a,b)=>a+b,0);
+  h+='<tr class="total-row"><td>💰 TOTAL</td>';
+  mT.forEach((v,m)=>{const isc=selYearCats===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''}">${fmtS(v)}</td>`});
+  h+=`<td>${fmtS(tA)}</td><td>${fmtS(tA/moisActifs)}</td></tr></tbody></table>`;
+  document.getElementById('anneecats-table').innerHTML=h;
+}
 
 function renderAnnee(){
   document.getElementById('year-lbl').textContent=selYear;
