@@ -120,18 +120,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .recap-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .recap-tab{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s}
 .recap-tab.active{background:#162D49;color:var(--accent);border-color:#1a1a1a}
-.recap-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:auto;box-shadow:var(--shadow);margin-bottom:14px}
+.recap-table{background:#ffffff;border:1px solid var(--border);border-radius:var(--r);overflow:auto;box-shadow:var(--shadow);margin-bottom:14px}
 .recap-table table{width:100%;border-collapse:collapse}
 .recap-table th{background:#162D49;color:#f4f1ec;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;white-space:nowrap}
 .recap-table th:first-child{text-align:left;min-width:150px;position:sticky;left:0;z-index:2}
-.recap-table td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap}
-.recap-table td:first-child{text-align:left;font-weight:500;position:sticky;left:0;background:var(--surface);z-index:1;border-right:1px solid var(--border)}
-.recap-table tr:hover td{background:var(--surface2)}
-.recap-table tr:hover td:first-child{background:var(--surface2)}
+.recap-table td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap;color:var(--text)}
+.recap-table td:first-child{text-align:left;font-weight:500;position:sticky;left:0;background:#ffffff;z-index:1;border-right:1px solid var(--border);color:var(--text)}
+.recap-table tr:hover td{background:#f0e8df}
+.recap-table tr:hover td:first-child{background:#f0e8df}
 .recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff}
 .recap-table .total-row td{background:#162D49!important;color:var(--accent)!important;font-weight:700;font-size:12px}
-.zero{color:var(--text3)!important}
-.cur{background:var(--accent-light)!important;font-weight:600}
+.zero{color:#8a9aaa!important}
+.cur{background:#dde8f5!important;font-weight:600;color:#162D49!important}
 
 /* ANNÉE */
 /* ANNÉE */
@@ -319,7 +319,7 @@ const CATS=[
   {id:'transport',label:'Transport', icon:'🚗',color:'#162D49',postes:['Carburant','Assurance voiture','Réparation véhicule','Train / Avion','Vélo']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#be185d',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
   {id:'divers',   label:'Divers',    icon:'📦',color:'#475569',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#7a6e9e',postes:['Clémence']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#A495C3',postes:['Clémence','Livret A / LDDS']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
