@@ -189,6 +189,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .page{display:none}
 .page.active{display:block}
 .hidden{display:none!important}
+.modal-overlay.hidden{display:none!important}
 
 /* RELEVÉ */
 .releve-item{background:var(--surface);border-radius:var(--r);padding:13px 16px;margin-bottom:8px;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;align-items:center;gap:12px}
@@ -319,7 +320,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <!-- MODAL MODIFICATION -->
-<div class="modal-overlay hidden" id="modal-edit">
+<div class="modal-overlay" id="modal-edit" style="display:none">
   <div class="modal-box" style="text-align:left">
     <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px">✏️ Modifier l'opération</div>
     <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Poste</div>
@@ -330,7 +331,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <input type="text" id="edit-note" placeholder="Note / commentaire…" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:16px">
     <div style="display:flex;gap:10px">
       <button onclick="saveEdit()" style="flex:1;background:var(--text);color:#fff;border:none;border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer">✓ Enregistrer</button>
-      <button onclick="document.getElementById('modal-edit').classList.add('hidden')" style="flex:1;background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;cursor:pointer">Annuler</button>
+      <button onclick="document.getElementById('modal-edit').style.display='none'" style="flex:1;background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;cursor:pointer">Annuler</button>
     </div>
   </div>
 </div>
@@ -710,8 +711,8 @@ function renderReleve(){
       </div>
       <div class="releve-amount" style="color:${isNeg?'var(--danger)':cat.color}">${fmt(d.montant)}</div>
       <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
-        <button class="releve-del" onclick="editReleve('${d.id}')" style="font-size:14px;color:var(--text2)">✏️</button>
-        <button class="releve-del" onclick="deleteReleve('${d.id}')">×</button>
+        <button class="releve-del" data-id="${d.id}" onclick="editReleve(this.dataset.id)" style="font-size:14px;color:var(--text2)">✏️</button>
+        <button class="releve-del" data-id="${d.id}" onclick="deleteReleve(this.dataset.id)">×</button>
       </div>
     </div>`;
   }).join('');
@@ -726,7 +727,7 @@ function editReleve(id){
   document.getElementById('edit-poste').value=d.poste;
   document.getElementById('edit-montant').value=d.montant;
   document.getElementById('edit-note').value=d.note||'';
-  document.getElementById('modal-edit').classList.remove('hidden');
+  document.getElementById('modal-edit').style.display='flex';
 }
 
 async function saveEdit(){
@@ -736,7 +737,7 @@ async function saveEdit(){
   if(!poste||isNaN(montant)||montant===0){toast('Veuillez remplir poste et montant');return;}
   const d=depenses.find(x=>x.id===editId);
   if(!d)return;
-  document.getElementById('modal-edit').classList.add('hidden');
+  document.getElementById('modal-edit').style.display='none';
   try{
     // Supprimer l'ancienne et recréer
     await jsonp({action:'delete',id:editId});
