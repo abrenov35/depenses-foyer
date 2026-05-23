@@ -204,6 +204,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <!-- HOME -->
 <div class="page active" id="page-home">
+
+  <!-- COCKPIT -->
+  <div class="cockpit">
+    <div class="ck-main">
+      <div class="ck-label">Ce mois</div>
       <div class="ck-amount" id="ck-mois">—</div>
       <div class="ck-month" id="ck-month-name"></div>
     </div>
@@ -224,14 +229,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <button onclick="changeMonth(1)">›</button>
   </div>
 
-  <!-- SAISIE RAPIDE -->
+  <!-- SAISIE -->
   <div class="quick-entry">
     <div class="qe-cats" id="qe-cats-1"></div>
     <div class="qe-cats" id="qe-cats-2"></div>
     <div class="qe-body">
       <div class="qe-poste-label">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
-      <div style="font-size:11px;color:#8a8078;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
+      <div style="font-size:11px;color:#8a9aaa;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
           <input type="number" id="f-montant" placeholder="0" step="0.01" inputmode="decimal">
@@ -241,7 +246,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
       <div class="qe-options-row">
         <button class="btn-options" id="btn-opts" onclick="toggleOpts()">+ options</button>
-        <span style="font-size:11px;color:var(--text3)" id="f-date-display"></span>
+        <span style="font-size:11px;color:#8a9aaa" id="f-date-display"></span>
       </div>
       <div class="qe-extra" id="qe-extra">
         <input type="text" id="f-note" placeholder="Note / commentaire…">
@@ -249,12 +254,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
     </div>
   </div>
-
-  <!-- CARTES CATS -->
-  <div class="cat-cards" id="cat-cards"></div>
-
-  <!-- LISTE -->
-  <div id="liste-depenses"></div>
 
 </div>
 
@@ -482,7 +481,22 @@ function getPrevMonth(){
 
 function renderAll(){initSaisie();renderHome()}
 
-function renderHome(){}
+function renderHome(){
+  document.getElementById('month-lbl').textContent=MFR[curMonth]+' '+curYear;
+  document.getElementById('ck-month-name').textContent=MFR[curMonth]+' '+curYear;
+  const md=depenses.filter(d=>d.month===curMonth&&d.year===curYear);
+  const mTotal=md.reduce((s,d)=>s+d.montant,0);
+  const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y})}
+  const slTotal=depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
+  const moisActifs=new Set(depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
+  const moy=moisActifs>0?slTotal/moisActifs:0;
+  const prev=getPrevMonth();
+  const prevTotal=depenses.filter(d=>d.month===prev.m&&d.year===prev.y).reduce((s,d)=>s+d.montant,0);
+  document.getElementById('ck-mois').textContent=fmtS(mTotal);
+  document.getElementById('ck-moy').textContent=fmtS(moy);
+  document.getElementById('ck-prev').textContent=fmtS(prevTotal);
+  document.getElementById('ck-prev-lbl').textContent=MFR[prev.m].slice(0,4)+'. '+prev.y;
+}
 
 function quickSelectCat(id){
   selCat=id;selPoste='';
