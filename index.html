@@ -178,7 +178,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#ffffff!important;--text:#ffffff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.grand-total-card *{color:#ffffff!important}
+.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#ffffff!important;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Inter',sans-serif;font-size:15px}
 .gt-amount{font-family:'Inter',sans-serif;font-size:24px;color:var(--accent)}
 
@@ -188,6 +189,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .page{display:none}
 .page.active{display:block}
 .hidden{display:none!important}
+
+/* RELEVÉ */
+.releve-item{background:var(--surface);border-radius:var(--r);padding:13px 16px;margin-bottom:8px;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.releve-cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.releve-info{flex:1;min-width:0}
+.releve-poste{font-weight:600;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.releve-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.releve-meta span{background:var(--surface2);border-radius:4px;padding:1px 6px;margin-right:4px}
+.releve-amount{font-weight:700;font-size:15px;white-space:nowrap;text-align:right;min-width:70px}
+.releve-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:4px;border-radius:6px;flex-shrink:0;transition:color .15s}
+.releve-del:active{color:var(--danger)}
+.releve-empty{text-align:center;padding:40px 0;color:var(--text3);font-style:italic;font-size:14px}
 </style>
 </head>
 <body>
@@ -290,6 +303,22 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="recap-table" id="anneecats-table"></div>
 </div>
 
+<!-- RELEVÉ -->
+<div class="page" id="page-releve">
+  <div class="section-title">Relevé</div>
+  <p class="section-sub" id="releve-sub"></p>
+  <div class="month-bar" style="margin-bottom:16px">
+    <button onclick="changeReleveMonth(-1)">‹</button>
+    <div class="month-lbl" id="releve-month-lbl"></div>
+    <button onclick="changeReleveMonth(1)">›</button>
+  </div>
+  <div id="releve-list"></div>
+  <div class="grand-total-card" style="margin-top:16px">
+    <div><div class="gt-label">Total du mois</div></div>
+    <div class="gt-amount" id="releve-total">0,00 €</div>
+  </div>
+</div>
+
 <!-- NAV BAS -->
 <nav class="bottom-nav">
   <button class="bnav-btn active" onclick="showPage('home',this)">
@@ -300,6 +329,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </button>
   <button class="bnav-btn" onclick="showPage('anneecats',this)">
     <span class="bnav-icon">📊</span><span class="bnav-label">Par catégorie</span>
+  </button>
+  <button class="bnav-btn" onclick="showPage('releve',this)">
+    <span class="bnav-icon">📋</span><span class="bnav-label">Relevé</span>
   </button>
 </nav>
 
@@ -324,6 +356,7 @@ let curMonth=new Date().getMonth(),curYear=new Date().getFullYear();
 let selYear=new Date().getFullYear(),anneeView='cats';
 let selCat='alim',selPoste='';
 let depenses=[],cbN=0,optsOpen=false,lastEntry=null;
+let releveMonth=new Date().getMonth(),releveYear=new Date().getFullYear();
 
 function getRecents(id){try{return JSON.parse(localStorage.getItem('rec_'+id)||'[]')}catch{return[]}}
 function addRecent(id,p){let r=getRecents(id).filter(x=>x!==p);r.unshift(p);localStorage.setItem('rec_'+id,JSON.stringify(r.slice(0,3)))}
@@ -364,6 +397,7 @@ function showPage(p,btn){
   if(btn)btn.classList.add('active');
   if(p==='annee')renderAnnee();
   if(p==='anneecats')renderAnneeCats();
+  if(p==='releve')renderReleve();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -621,6 +655,58 @@ function toggleCatDetail(ci){
   const isOpen=detail.classList.contains('open');
   detail.classList.toggle('open',!isOpen);
   if(arrow)arrow.classList.toggle('open',!isOpen);
+}
+
+function changeReleveMonth(d){
+  releveMonth+=d;
+  if(releveMonth<0){releveMonth=11;releveYear--}
+  if(releveMonth>11){releveMonth=0;releveYear++}
+  renderReleve();
+}
+
+function renderReleve(){
+  document.getElementById('releve-month-lbl').textContent=MFR[releveMonth]+' '+releveYear;
+  const md=depenses.filter(d=>d.month===releveMonth&&d.year===releveYear)
+    .sort((a,b)=>a.date>b.date?1:-1);
+  const total=md.reduce((s,d)=>s+d.montant,0);
+  document.getElementById('releve-sub').textContent=
+    md.length+' opération'+(md.length>1?'s':'')+' · '+MFR[releveMonth]+' '+releveYear;
+  document.getElementById('releve-total').textContent=fmt(total);
+
+  const list=document.getElementById('releve-list');
+  if(!md.length){
+    list.innerHTML='<div class="releve-empty">Aucune opération ce mois</div>';
+    return;
+  }
+  list.innerHTML=md.map(d=>{
+    const cat=CATS.find(c=>c.id===d.cat)||{color:'#999',label:'?',icon:'?'};
+    const isNeg=d.montant<0;
+    const dateStr=fmtDate(d.date)||'';
+    return`<div class="releve-item">
+      <div class="releve-cat-dot" style="background:${cat.color}"></div>
+      <div class="releve-info">
+        <div class="releve-poste">${cat.icon} ${d.poste}</div>
+        <div class="releve-meta">
+          <span style="color:${cat.color};background:${cat.color}18">${cat.label}</span>
+          ${dateStr?`<span>${dateStr}</span>`:''}
+          ${d.note?`<span>${d.note}</span>`:''}
+        </div>
+      </div>
+      <div class="releve-amount" style="color:${isNeg?'var(--danger)':cat.color}">${fmt(d.montant)}</div>
+      <button class="releve-del" onclick="deleteReleve('${d.id}')">×</button>
+    </div>`;
+  }).join('');
+}
+
+async function deleteReleve(id){
+  if(!confirm('Supprimer cette opération ?'))return;
+  try{
+    await jsonp({action:'delete',id:String(id)});
+    depenses=depenses.filter(d=>d.id!==String(id));
+    toast('🗑 Opération supprimée');
+    renderReleve();
+    renderHome();
+  }catch(e){toast('⚠️ Erreur suppression')}
 }
 
 chargerDonnees();
