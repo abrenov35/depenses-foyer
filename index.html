@@ -18,16 +18,16 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;overscroll-behavior:none;padding-bottom:var(--nav-h)}
 
 /* TOPBAR */
-.topbar{background:var(--text);color:#f4f1ec;padding:0 18px;display:flex;align-items:center;height:50px;position:sticky;top:0;z-index:100}
+.topbar{background:var(--accent);color:#fff;padding:0 18px;display:flex;align-items:center;height:50px;position:sticky;top:0;z-index:100}
 .topbar-title{font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:1px}
-.topbar-title span{color:var(--accent)}
+.topbar-title span{color:rgba(255,255,255,.7)}
 
 /* NAV BAS */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--text);display:flex;align-items:center;justify-content:space-around;z-index:100;border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom)}
-.bnav-btn{background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 20px;border-radius:10px;transition:all .2s;color:#a89e93}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--accent);display:flex;align-items:center;justify-content:space-around;z-index:100;border-top:1px solid rgba(255,255,255,.15);padding-bottom:env(safe-area-inset-bottom)}
+.bnav-btn{background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 20px;border-radius:10px;transition:all .2s;color:rgba(255,255,255,.6)}
 .bnav-btn .bnav-icon{font-size:22px;line-height:1}
 .bnav-btn .bnav-label{font-size:10px;font-weight:500;letter-spacing:.5px;font-family:'DM Sans',sans-serif}
-.bnav-btn.active{color:var(--accent)}
+.bnav-btn.active{color:#fff}
 .bnav-btn.active .bnav-icon{transform:scale(1.1)}
 
 .container{max-width:600px;margin:0 auto;padding:14px 14px}
@@ -37,18 +37,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .loader-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-
 /* COCKPIT COMPACT */
-.cockpit{background:var(--text);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:0;overflow:hidden;color:#f4f1ec}
-.ck-main{flex:1.4;padding-right:14px;border-right:1px solid rgba(255,255,255,.1)}
+.cockpit{background:var(--text);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;overflow:hidden;color:#f4f1ec}
+.ck-main{padding-right:10px;border-right:1px solid rgba(255,255,255,.1);padding-bottom:0}
 .ck-main .ck-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#a89e93;margin-bottom:1px}
-.ck-main .ck-amount{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;color:var(--accent);line-height:1}
+.ck-main .ck-amount{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--accent);line-height:1}
 .ck-main .ck-month{font-size:11px;color:#a89e93;margin-top:2px}
-.ck-stats{flex:1;display:flex;flex-direction:column;gap:8px;padding-left:14px}
-.ck-stat{display:flex;flex-direction:column}
-.ck-stat .ck-sv{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#f4f1ec;line-height:1}
+.ck-stats{display:contents}
+.ck-stat{display:flex;flex-direction:column;padding:0 10px;border-right:1px solid rgba(255,255,255,.1)}
+.ck-stat .ck-sv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#f4f1ec;line-height:1}
 .ck-stat .ck-sl{font-size:9px;color:#a89e93;text-transform:uppercase;letter-spacing:1px;margin-top:1px}
-.ck-stat-sep{height:1px;background:rgba(255,255,255,.07)}
+
 
 /* MOIS NAV */
 .month-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -177,8 +176,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-
-
 .grand-total-card{background:var(--text);color:#f4f1ec;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Cormorant Garamond',serif;font-size:16px}
 .gt-amount{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--accent)}
@@ -213,16 +210,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="ck-amount" id="ck-mois">—</div>
       <div class="ck-month" id="ck-month-name"></div>
     </div>
-    <div class="ck-stats">
-      <div class="ck-stat">
-        <div class="ck-sv" id="ck-moy">—</div>
-        <div class="ck-sl">Moyenne / mois</div>
-      </div>
-      <div class="ck-stat-sep"></div>
-      <div class="ck-stat">
-        <div class="ck-sv" id="ck-prev">—</div>
-        <div class="ck-sl" id="ck-prev-lbl">Mois précédent</div>
-      </div>
+    <div class="ck-stat">
+      <div class="ck-sv" id="ck-moy">—</div>
+      <div class="ck-sl">Moyenne</div>
+    </div>
+    <div class="ck-stat" style="border-right:none">
+      <div class="ck-sv" id="ck-prev">—</div>
+      <div class="ck-sl" id="ck-prev-lbl">Mois préc.</div>
     </div>
   </div>
 
@@ -687,41 +681,6 @@ function toggleCatDetail(ci){
   const isOpen=detail.classList.contains('open');
   detail.classList.toggle('open',!isOpen);
   if(arrow)arrow.classList.toggle('open',!isOpen);
-}
-
-function renderAnneeTable(){}
-
-  const f=sl[0],l=sl[sl.length-1];
-  document.getElementById('glissant-period').textContent=`${MFR[f.m]} ${f.y} → ${MFR[l.m]} ${l.y}`;
-  const inSl=d=>sl.some(s=>s.m===d.month&&s.y===d.year);
-  const grand=depenses.filter(inSl).reduce((s,d)=>s+d.montant,0);
-  const moisActifsGl=new Set(depenses.filter(inSl).map(d=>d.year+'-'+d.month)).size||1;
-  document.getElementById('glissant-total').textContent=fmt(grand);
-  document.getElementById('glissant-moy-lbl').textContent=`Moyenne mensuelle (sur ${moisActifsGl} mois) : `+fmt(grand/moisActifsGl);
-  document.getElementById('glissant-grid').innerHTML=CATS.map(cat=>{
-    const total=depenses.filter(d=>d.cat===cat.id&&inSl(d)).reduce((s,d)=>s+d.montant,0);
-    return`<div class="glissant-card" style="border-top-color:${cat.color}">
-      <div class="card-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="card-amount" style="color:${cat.color}">${fmtS(total)}</div>
-      <div class="card-sub">sur 12 mois</div>
-      <div class="card-moy">Moy/mois : <strong>${fmtS(new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size>0?total/new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size:0)}</strong></div>
-    </div>`;
-  }).join('');
-  let h='<table><thead><tr><th>Catégorie</th>';
-  sl.forEach(s=>{h+=`<th>${MS[s.m]}<br><span style="font-size:9px;opacity:.7">${s.y}</span></th>`});
-  h+='<th style="background:#4a4a4a">Total</th><th style="background:#4a4a4a">Moy</th></tr></thead><tbody>';
-  let mT=new Array(12).fill(0);
-  CATS.forEach(cat=>{
-    h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
-    let rs=0;
-    sl.forEach((s,si)=>{const v=depenses.filter(d=>d.cat===cat.id&&d.month===s.m&&d.year===s.y).reduce((a,d)=>a+d.montant,0);rs+=v;mT[si]+=v;h+=`<td class="${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-    const moisActifsCatGl=new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size||1;
-    h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisActifsCatGl)}</td></tr>`;
-  });
-  h+='<tr class="total-row"><td>💰 TOTAL</td>';
-  mT.forEach(v=>{h+=`<td>${fmtS(v)}</td>`});
-  h+=`<td>${fmtS(grand)}</td><td>${fmtS(grand/moisActifsGl)}</td></tr></tbody></table>`;
-  document.getElementById('glissant-table').innerHTML=h;
 }
 
 chargerDonnees();
