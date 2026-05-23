@@ -347,9 +347,9 @@ const CATS=[
   {id:'transport',label:'Transport', icon:'🚗', color:'#162D49', postes:['Carburant','Assurance voiture','Réparation véhicule','Train / Avion','Autre']},
   {id:'sante',    label:'Santé',     icon:'❤️', color:'#be185d', postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Remboursement','Autre']},
   {id:'divers',   label:'Divers',    icon:'📦', color:'#475569', postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux']},
-  {id:'clemence', label:'Clémence',  icon:'👩🏽', color:'#A495C3', postes:['Clémence'], noPoste:true},
-  {id:'epargne',  label:'Épargne',   icon:'💰', color:'#d97706', postes:['Épargne'],   noPoste:true},
-  {id:'abrenov',  label:'AB Renov',  icon:'🔨', color:'#b45309', postes:['AB Renov'],  noPoste:true},
+  {id:'clemence', label:'Clémence',  icon:'👩🏽', color:'#A495C3', postes:['Poste libre']},
+  {id:'epargne',  label:'Épargne',   icon:'💰', color:'#d97706', postes:['Poste libre']},
+  {id:'abrenov',  label:'AB Renov',  icon:'🔨', color:'#b45309', postes:['Poste libre']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -468,15 +468,17 @@ function renderPostes(){
   const wrap=document.getElementById('qe-postes');
   const label=document.getElementById('qe-poste-label-wrap');
 
-  // Catégories sans sous-poste : on masque la section Poste
-  if(cat.noPoste){
-    label.style.display='none';
-    wrap.style.display='none';
-    selPoste=cat.postes[0];
-    return;
-  }
   label.style.display='';
   wrap.style.display='';
+
+  // Catégorie à poste unique : affiché sélectionné, note libre
+  if(cat.postes.length===1){
+    selPoste=cat.postes[0];
+    const col=cat.color;
+    wrap.innerHTML=`<div class="qe-poste-btn active"
+      style="background:${col};color:#fff;border-color:${col}">${cat.postes[0]}</div>`;
+    return;
+  }
 
   const recents=getRecents(selCat);
   const basePostes=cat.postes.filter(p=>p!=='Autre');
@@ -589,8 +591,8 @@ function renderAnneeCats(){
     }).join('');
     const moisC=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.month)).size||1;
     h+=`<tr class="cat-row" style="background:${cat.color}"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>${rowCells}<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisC)}</td></tr>`;
-    // Postes détail (seulement si pas noPoste)
-    if(!cat.noPoste){
+    // Postes détail (seulement si plus d'un poste)
+    if(cat.postes.length>1){
       const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.poste))];
       postesUtilises.forEach(poste=>{
         let prs=0;
