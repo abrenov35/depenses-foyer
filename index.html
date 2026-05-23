@@ -256,7 +256,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <span class="euro">€</span>
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
-        <button class="btn-annuler" id="btn-annuler" onclick="annulerDerniere()" title="Annuler la dernière saisie">↩</button>
       </div>
       <input type="text" id="f-note" placeholder="Note / commentaire (optionnel)" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;margin-bottom:8px">
       <div class="qe-options-row">
@@ -316,6 +315,23 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="grand-total-card" style="margin-top:16px">
     <div><div class="gt-label">Total du mois</div></div>
     <div class="gt-amount" id="releve-total">0,00 €</div>
+  </div>
+</div>
+
+<!-- MODAL MODIFICATION -->
+<div class="modal-overlay hidden" id="modal-edit">
+  <div class="modal-box" style="text-align:left">
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px">✏️ Modifier l'opération</div>
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Poste</div>
+    <input type="text" id="edit-poste" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:12px">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Montant (€)</div>
+    <input type="number" id="edit-montant" step="0.01" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:12px">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Note</div>
+    <input type="text" id="edit-note" placeholder="Note / commentaire…" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:16px">
+    <div style="display:flex;gap:10px">
+      <button onclick="saveEdit()" style="flex:1;background:var(--text);color:#fff;border:none;border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer">✓ Enregistrer</button>
+      <button onclick="document.getElementById('modal-edit').classList.add('hidden')" style="flex:1;background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;cursor:pointer">Annuler</button>
+    </div>
   </div>
 </div>
 
@@ -693,9 +709,45 @@ function renderReleve(){
         </div>
       </div>
       <div class="releve-amount" style="color:${isNeg?'var(--danger)':cat.color}">${fmt(d.montant)}</div>
-      <button class="releve-del" onclick="deleteReleve('${d.id}')">×</button>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+        <button class="releve-del" onclick="editReleve('${d.id}')" style="font-size:14px;color:var(--text2)">✏️</button>
+        <button class="releve-del" onclick="deleteReleve('${d.id}')">×</button>
+      </div>
     </div>`;
   }).join('');
+}
+
+let editId=null;
+
+function editReleve(id){
+  const d=depenses.find(x=>x.id===String(id));
+  if(!d)return;
+  editId=String(id);
+  document.getElementById('edit-poste').value=d.poste;
+  document.getElementById('edit-montant').value=d.montant;
+  document.getElementById('edit-note').value=d.note||'';
+  document.getElementById('modal-edit').classList.remove('hidden');
+}
+
+async function saveEdit(){
+  const poste=document.getElementById('edit-poste').value.trim();
+  const montant=parseFloat(document.getElementById('edit-montant').value);
+  const note=document.getElementById('edit-note').value.trim();
+  if(!poste||isNaN(montant)||montant===0){toast('Veuillez remplir poste et montant');return;}
+  const d=depenses.find(x=>x.id===editId);
+  if(!d)return;
+  document.getElementById('modal-edit').classList.add('hidden');
+  try{
+    // Supprimer l'ancienne et recréer
+    await jsonp({action:'delete',id:editId});
+    const newId=String(Date.now());
+    await jsonp({action:'add',id:newId,cat:d.cat,poste,note,montant,date:d.date,month:d.month,year:d.year,operateur:d.operateur});
+    depenses=depenses.filter(x=>x.id!==editId);
+    depenses.push({...d,id:newId,poste,note,montant});
+    toast('✓ Opération modifiée');
+    renderReleve();renderHome();
+  }catch(e){toast('⚠️ Erreur modification')}
+  editId=null;
 }
 
 async function deleteReleve(id){
