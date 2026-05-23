@@ -128,7 +128,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .recap-table td:first-child{text-align:left;font-weight:500;position:sticky;left:0;background:#ffffff;z-index:1;border-right:1px solid var(--border);color:var(--text)}
 .recap-table tr:hover td{background:#f0e8df}
 .recap-table tr:hover td:first-child{background:#f0e8df}
-.recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff}
+.recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff!important;background:inherit!important}
 .recap-table .total-row td{background:#162D49!important;color:var(--accent)!important;font-weight:700;font-size:12px}
 .zero{color:#8a9aaa!important}
 .cur{background:#dde8f5!important;font-weight:600;color:#162D49!important}
@@ -315,11 +315,11 @@ const CATS=[
   {id:'maison',   label:'Maison',    icon:'🏠',color:'#2563a0',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager']},
   {id:'energie',  label:'Énergie',   icon:'⚡',color:'#0891b2',postes:['Électricité','Eau','Internet / Box','Téléphone mobile']},
   {id:'alim',     label:'Courses',   icon:'🛒',color:'#059669',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant']},
-  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#7c3aed',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Hobbies','Sorties']},
+  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#7c3aed',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Sorties']},
   {id:'transport',label:'Transport', icon:'🚗',color:'#162D49',postes:['Carburant','Assurance voiture','Réparation véhicule','Train / Avion','Vélo']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#be185d',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
   {id:'divers',   label:'Divers',    icon:'📦',color:'#475569',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#A495C3',postes:['Clémence','Livret A / LDDS']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#A495C3',postes:['Clémence']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -589,7 +589,7 @@ function renderAnneeCats(){
       return`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`;
     }).join('');
     const moisC=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.month)).size||1;
-    h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>${rowCells}<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisC)}</td></tr>`;
+    h+=`<tr class="cat-row" style="background:${cat.color}"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>${rowCells}<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisC)}</td></tr>`;
     // Lignes postes
     const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.poste))];
     postesUtilises.forEach(poste=>{
@@ -631,7 +631,7 @@ function renderAnnee(){
   CATS.forEach(cat=>{
     const v=sy(cat.id,null,selYear);
     if(v===0)return;
-    h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
+    h+=`<tr class="cat-row" style="background:${cat.color}"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
     moisAvecData.forEach(m=>{
       const mv=sym(cat.id,null,selYear,m);
       mT[m]+=mv;
