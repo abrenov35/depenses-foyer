@@ -231,7 +231,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="ck-main">
       <div class="ck-label">Ce mois</div>
       <div class="ck-amount" id="ck-mois">—</div>
-      <div class="ck-month" id="ck-month-name"></div>
+
     </div>
     <div class="ck-stat">
       <div class="ck-sl">Moyenne</div>
@@ -327,18 +327,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <!-- MODAL MODIFICATION -->
-<div class="modal-overlay" id="modal-edit" style="display:none;position:fixed;inset:0;background:rgba(22,45,73,.7);align-items:center;justify-content:center;z-index:998">
-  <div class="modal-box" style="text-align:left">
-    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px">✏️ Modifier l'opération</div>
-    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Poste</div>
-    <input type="text" id="edit-poste" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:12px">
-    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Montant (€)</div>
-    <input type="number" id="edit-montant" step="0.01" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:12px">
-    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px">Note</div>
-    <input type="text" id="edit-note" placeholder="Note / commentaire…" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;margin-bottom:16px">
+<div class="modal-overlay" id="modal-edit" style="display:none;position:fixed;inset:0;background:rgba(22,45,73,.75);align-items:center;justify-content:center;z-index:998;padding:20px">
+  <div style="background:#fff;border-radius:16px;padding:24px;width:100%;max-width:380px;box-shadow:0 16px 48px rgba(22,45,73,.25)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <div style="background:#EDE5D8;border-radius:8px;padding:8px;font-size:18px">✏️</div>
+      <div style="font-size:16px;font-weight:700;color:#162D49">Modifier l'opération</div>
+    </div>
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8a9aaa;margin-bottom:6px">Poste</div>
+    <input type="text" id="edit-poste" style="width:100%;padding:11px 14px;border:1.5px solid #D9CFC4;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#162D49;background:#faf8f5;outline:none;margin-bottom:14px;font-weight:500">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8a9aaa;margin-bottom:6px">Montant (€)</div>
+    <input type="number" id="edit-montant" step="0.01" style="width:100%;padding:11px 14px;border:1.5px solid #D9CFC4;border-radius:10px;font-family:'Inter',sans-serif;font-size:20px;color:#162D49;background:#faf8f5;outline:none;margin-bottom:14px;font-weight:700">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8a9aaa;margin-bottom:6px">Note</div>
+    <input type="text" id="edit-note" placeholder="Note / commentaire…" style="width:100%;padding:11px 14px;border:1.5px solid #D9CFC4;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#162D49;background:#faf8f5;outline:none;margin-bottom:20px">
     <div style="display:flex;gap:10px">
-      <button onclick="saveEdit()" style="flex:1;background:var(--text);color:#fff;border:none;border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer">✓ Enregistrer</button>
-      <button onclick="document.getElementById('modal-edit').style.display='none'" style="flex:1;background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px;font-family:'Inter',sans-serif;font-size:14px;cursor:pointer">Annuler</button>
+      <button onclick="saveEdit()" style="flex:1;background:#162D49;color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer">✓ Enregistrer</button>
+      <button onclick="document.getElementById('modal-edit').style.display='none'" style="flex:1;background:#F3EAE2;color:#162D49;border:none;border-radius:10px;padding:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Annuler</button>
     </div>
   </div>
 </div>
@@ -567,7 +570,6 @@ function renderAll(){initSaisie();renderHome()}
 
 function renderHome(){
   document.getElementById('month-lbl').textContent=MFR[curMonth]+' '+curYear;
-  document.getElementById('ck-month-name').textContent=MFR[curMonth]+' '+curYear;
   const md=depenses.filter(d=>d.month===curMonth&&d.year===curYear);
   const mTotal=md.reduce((s,d)=>s+d.montant,0);
   const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y})}
