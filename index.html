@@ -86,6 +86,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .qe-extra input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--surface2);outline:none;margin-bottom:7px}
 .qe-extra input:last-child{margin-bottom:0}
 .qe-extra input:focus{border-color:var(--accent)}
+.libre-input{width:100%;padding:8px 12px;border:2.5px solid var(--accent);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1610;background:#fff;outline:none;margin-top:8px;font-weight:500}
+.libre-input::placeholder{color:#a89e93}
 
 /* CARTES CATS */
 .cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
@@ -234,6 +236,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="qe-body">
       <div class="qe-poste-label">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
+      <div id="libre-wrap" style="display:none">
+        <input type="text" class="libre-input" id="f-libre" placeholder="Saisissez votre libellé…" oninput="selPosteLibre=this.value">
+      </div>
       <div style="font-size:11px;color:#8a8078;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
@@ -321,14 +326,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOVCNSyFGDpA3kWDjSmoKIbxTOcc5Xa6r7DIcD9_Tdf7rfDE/exec';
 
 const CATS=[
-  {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager']},
-  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Internet / Box','Téléphone fixe','Téléphone mobile']},
-  {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Cave / Boissons']},
-  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#3a7fa8',postes:['Streaming','Musique','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties']},
-  {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo']},
-  {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
-  {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Total']},
+  {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager','Autre (libre)']},
+  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Internet / Box','Téléphone fixe','Téléphone mobile','Autre (libre)']},
+  {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Autre (libre)']},
+  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#3a7fa8',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties','Autre (libre)']},
+  {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo','Autre (libre)']},
+  {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Autre (libre)']},
+  {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres','Autre (libre)']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Total','Autre (libre)']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -449,7 +454,8 @@ async function addDepense(){
   const montant=parseFloat(document.getElementById('f-montant').value);
   const note=document.getElementById('f-note').value.trim();
   const dateVal=document.getElementById('f-date').value||new Date().toISOString().split('T')[0];
-  const poste=selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
+  const libreVal=document.getElementById('f-libre')?.value?.trim();
+  const poste=selPoste==='Autre (libre)'?(libreVal||'Autre'):selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
   if(isNaN(montant)||montant===0){
     document.getElementById('f-montant').style.borderColor='#c0392b';
     document.getElementById('f-montant').focus();
@@ -465,6 +471,7 @@ async function addDepense(){
     addRecent(selCat,poste);
     document.getElementById('f-montant').value='';
     document.getElementById('f-note').value='';
+    const fl=document.getElementById('f-libre');if(fl)fl.value='';
     const cat=CATS.find(c=>c.id===selCat);
     const prefix=montant<0?'↩️ Remboursement':'✓';
     toast(`${prefix} ${cat.icon} ${poste} — ${fmt(montant)}`);
