@@ -204,11 +204,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <!-- HOME -->
 <div class="page active" id="page-home">
-
-  <!-- COCKPIT COMPACT -->
-  <div class="cockpit">
-    <div class="ck-main">
-      <div class="ck-label">Ce mois</div>
       <div class="ck-amount" id="ck-mois">—</div>
       <div class="ck-month" id="ck-month-name"></div>
     </div>
@@ -487,68 +482,7 @@ function getPrevMonth(){
 
 function renderAll(){initSaisie();renderHome()}
 
-function renderHome(){
-  document.getElementById('month-lbl').textContent=MFR[curMonth]+' '+curYear;
-  document.getElementById('ck-month-name').textContent=MFR[curMonth]+' '+curYear;
-
-  const md=depenses.filter(d=>d.month===curMonth&&d.year===curYear);
-  const mTotal=md.reduce((s,d)=>s+d.montant,0);
-
-  // 12 mois glissants pour moyenne
-  const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y})}
-  const slTotal=depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
-  const moisActifs=new Set(depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
-  const moy=moisActifs>0?slTotal/moisActifs:0;
-
-  // Mois précédent
-  const prev=getPrevMonth();
-  const prevTotal=depenses.filter(d=>d.month===prev.m&&d.year===prev.y).reduce((s,d)=>s+d.montant,0);
-
-  document.getElementById('ck-mois').textContent=fmtS(mTotal);
-  document.getElementById('ck-moy').textContent=fmtS(moy);
-  document.getElementById('ck-prev').textContent=fmtS(prevTotal);
-  document.getElementById('ck-prev-lbl').textContent=MFR[prev.m].slice(0,4)+'. '+prev.y;
-
-  // Cartes cats
-  const maxCat=Math.max(...CATS.map(c=>md.filter(d=>d.cat===c.id).reduce((s,d)=>s+d.montant,0)),1);
-  document.getElementById('cat-cards').innerHTML=CATS.map(cat=>{
-    const v=md.filter(d=>d.cat===cat.id).reduce((s,d)=>s+d.montant,0);
-    const slv=depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
-    const moisActifsCat=new Set(depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
-    const moyC=moisActifsCat>0?slv/moisActifsCat:0,pct=maxCat>0?Math.round((v/maxCat)*100):0,dif=v-moyC;
-    return`<div class="cat-card" style="border-left-color:${cat.color}" onclick="quickSelectCat('${cat.id}')">
-      <div class="cc-name" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="cc-amount" style="color:${cat.color}">${v>0?fmtS(v):'—'}</div>
-      <div class="cc-moy">Moy : ${fmtS(moyC)}/mois</div>
-      <div class="cc-bar"><div class="cc-bar-fill" style="width:${pct}%;background:${cat.color}88"></div></div>
-      ${v>0?`<div class="cc-state" style="color:${dif>0?'#c0392b':'#27ae60'}">${dif>0?'▲':'▼'} ${fmtS(Math.abs(dif))} vs moy</div>`:''}
-    </div>`;
-  }).join('');
-
-  // Liste
-  const liste=document.getElementById('liste-depenses');liste.innerHTML='';
-  CATS.forEach(cat=>{
-    const cd=md.filter(d=>d.cat===cat.id);
-    if(!cd.length)return;
-    const ct=cd.reduce((s,d)=>s+d.montant,0);
-    const sec=document.createElement('div');sec.className='dep-section';
-    const hdr=document.createElement('div');hdr.className='dep-section-hdr';hdr.style.background=cat.color;
-    hdr.innerHTML=`<span>${cat.icon} ${cat.label}</span><span class="hdr-total">${fmt(ct)}</span>`;
-    sec.appendChild(hdr);
-    cd.forEach(d=>{
-      const item=document.createElement('div');item.className='dep-item';
-      item.innerHTML=`
-        <div class="dep-item-info">
-          <div class="dep-item-poste">${d.poste}</div>
-          <div class="dep-item-meta">${fmtDate(d.date)}${d.note?' · '+d.note:''}</div>
-        </div>
-        <div class="dep-item-amount" style="color:${d.montant<0?'#c0392b':cat.color}">${d.montant<0?'↩️ ':''} ${fmt(d.montant)}</div>
-        <button class="dep-item-del" onclick="deleteDepense('${d.id}')">×</button>`;
-      sec.appendChild(item);
-    });
-    liste.appendChild(sec);
-  });
-}
+function renderHome(){}
 
 function quickSelectCat(id){
   selCat=id;selPoste='';
