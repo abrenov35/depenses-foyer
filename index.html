@@ -689,12 +689,8 @@ function renderReleve(){
   document.getElementById('releve-sub').textContent=
     md.length+' opération'+(md.length>1?'s':'')+' · '+MFR[releveMonth]+' '+releveYear;
   document.getElementById('releve-total').textContent=fmt(total);
-
   const list=document.getElementById('releve-list');
-  if(!md.length){
-    list.innerHTML='<div class="releve-empty">Aucune opération ce mois</div>';
-    return;
-  }
+  if(!md.length){list.innerHTML='<div class="releve-empty">Aucune opération ce mois</div>';return;}
   list.innerHTML=md.map(d=>{
     const cat=CATS.find(c=>c.id===d.cat)||{color:'#999',label:'?',icon:'?'};
     const isNeg=d.montant<0;
@@ -711,8 +707,8 @@ function renderReleve(){
       </div>
       <div class="releve-amount" style="color:${isNeg?'var(--danger)':cat.color}">${fmt(d.montant)}</div>
       <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
-        <button class="releve-del" data-id="${d.id}" onclick="editReleve(this.dataset.id)" style="font-size:14px;color:var(--text2)">✏️</button>
-        <button class="releve-del" data-id="${d.id}" onclick="deleteReleve(this.dataset.id)">×</button>
+        <button class="releve-del" data-id="${d.id}" onclick="editReleve(this.dataset.id)" style="font-size:15px;color:var(--text2)">✏️</button>
+        <button class="releve-del" data-id="${d.id}" onclick="deleteReleve(this.dataset.id)" style="font-size:18px;color:var(--text3)">×</button>
       </div>
     </div>`;
   }).join('');
