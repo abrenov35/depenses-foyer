@@ -133,29 +133,51 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cur{background:var(--accent-light)!important;font-weight:600}
 
 /* ANNÉE */
+/* ANNÉE */
 .year-nav{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .year-sel{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 13px;box-shadow:var(--shadow)}
 .year-sel button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:20px;padding:0 3px}
 .year-lbl{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--accent);min-width:60px;text-align:center}
 .cmp-btn{padding:7px 13px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s;box-shadow:var(--shadow)}
 .cmp-btn.active{background:var(--text);color:var(--accent);border-color:var(--text)}
-.year-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
-.year-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;box-shadow:var(--shadow);border-top:3px solid}
-.yc-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:3px}
-.yc-amount{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700}
-.yc-moy{font-size:10px;color:var(--text3);margin-top:2px}
-.yc-cmp{font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid var(--border)}
+
+/* Cartes mensuelles */
+.months-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.month-card{background:var(--surface);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border:1px solid var(--border);border-left:3px solid var(--accent)}
+.month-card.current{border-left-color:var(--accent);background:var(--accent-light)}
+.mc-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.mc-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.mc-total{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--text)}
+.mc-bars{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;background:var(--border)}
+.mc-bar{height:100%;transition:width .3s}
+.mc-empty{font-size:11px;color:var(--text3);font-style:italic}
+
+/* Catégories cliquables */
+.year-cat-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.year-cat-item{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+.year-cat-header{display:flex;align-items:center;padding:13px 15px;cursor:pointer;gap:12px;transition:background .15s}
+.year-cat-header:active{background:var(--surface2)}
+.yci-icon{font-size:20px;flex-shrink:0}
+.yci-info{flex:1;min-width:0}
+.yci-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.yci-moy{font-size:11px;color:var(--text3);margin-top:1px}
+.yci-right{text-align:right;flex-shrink:0}
+.yci-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
+.yci-arrow{font-size:12px;color:var(--text3);margin-top:2px;transition:transform .2s}
+.yci-arrow.open{transform:rotate(90deg)}
+.year-cat-detail{display:none;border-top:1px solid var(--border);background:var(--surface2)}
+.year-cat-detail.open{display:block}
+.ycd-poste{display:flex;justify-content:space-between;align-items:center;padding:9px 15px 9px 20px;border-bottom:1px solid var(--border)}
+.ycd-poste:last-child{border-bottom:none}
+.ycd-poste-name{font-size:13px;font-weight:500;color:var(--text)}
+.ycd-months{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ycd-month-pill{font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 7px;color:var(--text2)}
+.ycd-poste-total{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;flex-shrink:0;margin-left:10px}
 .up{color:#c0392b;font-weight:600}
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-/* GLISSANT */
-.glissant-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
-.glissant-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border-top:3px solid}
-.card-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:3px}
-.card-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
-.card-sub{font-size:10px;color:var(--text3);margin-top:2px}
-.card-moy{font-size:11px;color:var(--text2);margin-top:5px;padding-top:5px;border-top:1px solid var(--border)}
+
 
 .grand-total-card{background:var(--text);color:#f4f1ec;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Cormorant Garamond',serif;font-size:16px}
@@ -259,37 +281,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- ANNÉE -->
 <div class="page" id="page-annee">
   <div class="section-title">Vue par année</div>
-  <p class="section-sub">Bilan · comparaison</p>
+  <p class="section-sub" id="annee-sub"></p>
   <div class="year-nav">
     <div class="year-sel">
       <button onclick="changeYear(-1)">‹</button>
       <div class="year-lbl" id="year-lbl"></div>
       <button onclick="changeYear(1)">›</button>
     </div>
-    <button class="cmp-btn" id="cmp-btn" onclick="toggleCompare()">⚖️ Comparer</button>
   </div>
-  <div class="year-cards" id="year-cards"></div>
-  <div class="grand-total-card" style="margin-bottom:14px">
+  <!-- Total annuel -->
+  <div class="grand-total-card" style="margin-bottom:16px">
     <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="year-total-sub"></div></div>
     <div class="gt-amount" id="year-total">0,00 €</div>
   </div>
-  <div class="recap-tabs">
-    <button class="recap-tab active" onclick="showAnneeView('cats',this)">Par catégorie</button>
-    <button class="recap-tab" onclick="showAnneeView('postes',this)">Par poste</button>
-  </div>
-  <div class="recap-table" id="annee-table"></div>
-</div>
-
-<!-- GLISSANT -->
-<div class="page" id="page-glissant">
-  <div class="section-title">12 mois glissants</div>
-  <p class="section-sub" id="glissant-period"></p>
-  <div class="glissant-grid" id="glissant-grid"></div>
-  <div class="grand-total-card" style="margin-bottom:14px">
-    <div><div class="gt-label">Total 12 mois</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="glissant-moy-lbl"></div></div>
-    <div class="gt-amount" id="glissant-total">0,00 €</div>
-  </div>
-  <div class="recap-table" id="glissant-table"></div>
+  <!-- Cartes 12 mois -->
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Les 12 mois</div>
+  <div class="months-grid" id="months-grid"></div>
+  <!-- Catégories cliquables -->
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Par catégorie</div>
+  <div class="year-cat-list" id="year-cat-list"></div>
 </div>
 
 </div>
@@ -307,10 +317,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <button class="bnav-btn" onclick="showPage('annee',this)">
     <span class="bnav-icon">📅</span>
     <span class="bnav-label">Année</span>
-  </button>
-  <button class="bnav-btn" onclick="showPage('glissant',this)">
-    <span class="bnav-icon">📈</span>
-    <span class="bnav-label">12 mois</span>
   </button>
 </nav>
 
@@ -332,7 +338,7 @@ const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','S
 const MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
 
 let curMonth=new Date().getMonth(),curYear=new Date().getFullYear();
-let selYear=new Date().getFullYear(),compareMode=false,anneeView='cats',recapView='cats';
+let selYear=new Date().getFullYear(),anneeView='cats',recapView='cats';
 let selCat='alim',selPoste='';
 let depenses=[],cbN=0,optsOpen=false;
 
@@ -375,13 +381,11 @@ function showPage(p,btn){
   if(btn)btn.classList.add('active');
   if(p==='recap')renderRecap();
   if(p==='annee')renderAnnee();
-  if(p==='glissant')renderGlissant();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function changeMonth(d){curMonth+=d;if(curMonth<0){curMonth=11;curYear--}if(curMonth>11){curMonth=0;curYear++}renderHome()}
 function changeYear(d){selYear+=d;renderAnnee()}
-function toggleCompare(){compareMode=!compareMode;document.getElementById('cmp-btn').classList.toggle('active',compareMode);renderAnnee()}
 function showAnneeView(v,btn){anneeView=v;document.querySelectorAll('#page-annee .recap-tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderAnneeTable()}
 function showRecapView(v,btn){recapView=v;document.querySelectorAll('#page-recap .recap-tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderRecap()}
 
@@ -609,62 +613,84 @@ function diff(n,p){if(!p)return'';const d=n-p,pct=Math.round((d/p)*100);if(d>0)r
 
 function renderAnnee(){
   document.getElementById('year-lbl').textContent=selYear;
-  const prev=selYear-1,total=ty(selYear),totalP=ty(prev);
+  const total=ty(selYear);
   document.getElementById('year-total').textContent=fmt(total);
   const moisActifsAn=new Set(depenses.filter(d=>d.year===selYear).map(d=>d.month)).size||1;
-  document.getElementById('year-total-sub').textContent=compareMode?`vs ${prev} : ${diff(total,totalP).replace(/<[^>]+>/g,'')}`:`Moy/mois (sur ${moisActifsAn} mois) : ${fmtS(total/moisActifsAn)}`;
-  document.getElementById('year-cards').innerHTML=CATS.map(cat=>{
-    const v=sy(cat.id,null,selYear),vp=sy(cat.id,null,prev);
-    return`<div class="year-card" style="border-top-color:${cat.color}">
-      <div class="yc-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="yc-amount" style="color:${cat.color}">${fmtS(v)}</div>
-      <div class="yc-moy">Moy/mois : ${fmtS(moisActifsAn>0?v/moisActifsAn:0)}</div>
-      ${compareMode&&vp>0?`<div class="yc-cmp">${diff(v,vp)} vs ${prev}<br><span style="color:var(--text3)">${prev} : ${fmtS(vp)}</span></div>`:''}
+  document.getElementById('year-total-sub').textContent=`Moy/mois (sur ${moisActifsAn} mois) : ${fmtS(total/moisActifsAn)}`;
+  document.getElementById('annee-sub').textContent=`Bilan ${selYear} · cliquez une catégorie pour le détail`;
+
+  // Cartes 12 mois
+  const maxMonth=Math.max(...Array.from({length:12},(_,m)=>depenses.filter(d=>d.year===selYear&&d.month===m).reduce((s,d)=>s+d.montant,0)),1);
+  document.getElementById('months-grid').innerHTML=Array.from({length:12},(_,m)=>{
+    const mTotal=depenses.filter(d=>d.year===selYear&&d.month===m).reduce((s,d)=>s+d.montant,0);
+    const isCur=selYear===curYear&&m===curMonth;
+    const pct=Math.round((mTotal/maxMonth)*100);
+    // Mini barres par cat
+    const catBars=CATS.map(cat=>{
+      const cv=depenses.filter(d=>d.year===selYear&&d.month===m&&d.cat===cat.id).reduce((s,d)=>s+d.montant,0);
+      const cpct=mTotal>0?Math.round((cv/mTotal)*100):0;
+      return cpct>0?`<div class="mc-bar" style="width:${cpct}%;background:${cat.color}"></div>`:'';
+    }).join('');
+    return`<div class="month-card${isCur?' current':''}">
+      <div class="mc-header">
+        <div class="mc-name">${MS[m]}</div>
+        <div class="mc-total" style="color:${mTotal===0?'var(--text3)':'var(--text)'}">${mTotal===0?'—':fmtS(mTotal)}</div>
+      </div>
+      ${mTotal>0?`<div class="mc-bars">${catBars}</div>`:'<div class="mc-empty">Pas de dépense</div>'}
     </div>`;
   }).join('');
-  renderAnneeTable();
+
+  // Catégories cliquables
+  document.getElementById('year-cat-list').innerHTML=CATS.map((cat,ci)=>{
+    const v=sy(cat.id,null,selYear);
+    const moisActifsCat=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYear).map(d=>d.month)).size||1;
+    // Postes utilisés cette année
+    const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYear).map(d=>d.poste))];
+
+    const posteRows=postesUtilises.map(poste=>{
+      const pTotal=sy(cat.id,poste,selYear);
+      // Mois avec dépenses
+      const moisPills=Array.from({length:12},(_,m)=>{
+        const mv=sym(cat.id,poste,selYear,m);
+        return mv!==0?`<span class="ycd-month-pill" style="border-color:${cat.color}22;color:${cat.color}">${MS[m]} ${fmtS(mv)}</span>`:'';
+      }).filter(Boolean).join('');
+      return`<div class="ycd-poste">
+        <div style="flex:1;min-width:0">
+          <div class="ycd-poste-name">${poste}</div>
+          <div class="ycd-months">${moisPills||'<span style="font-size:10px;color:var(--text3)">—</span>'}</div>
+        </div>
+        <div class="ycd-poste-total" style="color:${pTotal<0?'#c0392b':cat.color}">${fmtS(pTotal)}</div>
+      </div>`;
+    }).join('');
+
+    return`<div class="year-cat-item">
+      <div class="year-cat-header" onclick="toggleCatDetail(${ci})">
+        <div class="yci-icon">${cat.icon}</div>
+        <div class="yci-info">
+          <div class="yci-name" style="color:${cat.color}">${cat.label}</div>
+          <div class="yci-moy">Moy : ${fmtS(moisActifsCat>0?v/moisActifsCat:0)}/mois</div>
+        </div>
+        <div class="yci-right">
+          <div class="yci-amount" style="color:${v===0?'var(--text3)':v<0?'#c0392b':cat.color}">${v===0?'—':fmtS(v)}</div>
+          ${postesUtilises.length>0?`<div class="yci-arrow" id="arrow-${ci}">›</div>`:''}
+        </div>
+      </div>
+      ${postesUtilises.length>0?`<div class="year-cat-detail" id="detail-${ci}">${posteRows}</div>`:''}
+    </div>`;
+  }).join('');
 }
 
-function renderAnneeTable(){
-  const prev=selYear-1;
-  let h='<table><thead><tr><th>'+(anneeView==='cats'?'Catégorie':'Poste')+'</th>';
-  MS.forEach((m,i)=>{const isc=selYear===curYear&&i===curMonth;h+=`<th style="${isc?'background:var(--accent)':''}">${m}</th>`});
-  h+=`<th style="background:#4a4a4a">Total</th>`;
-  if(compareMode)h+=`<th style="background:#555">${prev}</th><th style="background:#555">Écart</th>`;
-  h+='</tr></thead><tbody>';
-  let mT=new Array(12).fill(0),mTP=new Array(12).fill(0);
-  CATS.forEach(cat=>{
-    if(anneeView==='cats'){
-      let rs=0,rsp=0;h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
-      for(let m=0;m<12;m++){const v=sym(cat.id,null,selYear,m),vp=sym(cat.id,null,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`}
-      h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td>`;
-      if(compareMode)h+=`<td style="color:var(--text3)">${fmtS(rsp)}</td><td>${diff(rs,rsp)}</td>`;
-      h+='</tr>';
-    }else{
-      h+=`<tr class="cat-row"><td colspan="${compareMode?15:13}" style="background:${cat.color}">${cat.icon} ${cat.label}</td></tr>`;
-      cat.postes.forEach(poste=>{
-        let rs=0,rsp=0,has=false;const cells=[];
-        for(let m=0;m<12;m++){const v=sym(cat.id,poste,selYear,m),vp=sym(cat.id,poste,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;if(v>0)has=true;cells.push({v,m})}
-        if(!has)return;
-        h+=`<tr><td style="padding-left:14px;font-size:11px">${poste}</td>`;
-        cells.forEach(({v,m})=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-        h+=`<td style="font-weight:600">${fmtS(rs)}</td>`;
-        if(compareMode)h+=`<td style="color:var(--text3)">${fmtS(rsp)}</td><td>${diff(rs,rsp)}</td>`;
-        h+='</tr>';
-      });
-    }
-  });
-  const tA=mT.reduce((a,b)=>a+b,0),tAP=mTP.reduce((a,b)=>a+b,0);
-  h+='<tr class="total-row"><td>💰 TOTAL</td>';
-  mT.forEach((v,m)=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''}">${fmtS(v)}</td>`});
-  h+=`<td>${fmtS(tA)}</td>`;
-  if(compareMode)h+=`<td>${fmtS(tAP)}</td><td>${diff(tA,tAP)}</td>`;
-  h+='</tr></tbody></table>';
-  document.getElementById('annee-table').innerHTML=h;
+function toggleCatDetail(ci){
+  const detail=document.getElementById('detail-'+ci);
+  const arrow=document.getElementById('arrow-'+ci);
+  if(!detail)return;
+  const isOpen=detail.classList.contains('open');
+  detail.classList.toggle('open',!isOpen);
+  if(arrow)arrow.classList.toggle('open',!isOpen);
 }
 
-function renderGlissant(){
-  const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y,ym:y+'-'+String(m).padStart(2,'0')})}
+function renderAnneeTable(){}
+
   const f=sl[0],l=sl[sl.length-1];
   document.getElementById('glissant-period').textContent=`${MFR[f.m]} ${f.y} → ${MFR[l.m]} ${l.y}`;
   const inSl=d=>sl.some(s=>s.m===d.month&&s.y===d.year);
