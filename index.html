@@ -39,16 +39,23 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* COCKPIT COMPACT */
 .cockpit{background:var(--text);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;overflow:hidden;color:#f4f1ec}
-.ck-main{padding-right:10px;border-right:1px solid rgba(255,255,255,.1);padding-bottom:0}
-.ck-main .ck-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:1px}
-.ck-main .ck-amount{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:#ffffff;line-height:1}
-.ck-main .ck-month{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
-.ck-stats{display:contents}
-.ck-stat{display:flex;flex-direction:column;padding:0 10px;border-right:1px solid rgba(255,255,255,.1)}
-.ck-stat .ck-sv{font-family:'Inter',sans-serif;font-size:19px;font-weight:600;color:#f4f1ec;line-height:1}
-.ck-stat .ck-sl{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+
+.ck-main 
+.ck-main 
+.ck-main 
 
 
+.ck-stat 
+.ck-stat 
+
+
+/* COCKPIT */
+.cockpit{background:#162D49;border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.ck-main,.ck-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 10px;border-right:1px solid rgba(255,255,255,.12)}
+.ck-stat:last-child,.ck-main:last-child{border-right:none}
+.ck-label,.ck-sl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:5px;font-weight:500}
+.ck-amount,.ck-sv{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:#ffffff;line-height:1}
+.ck-month{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px}
 /* MOIS NAV */
 .month-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .month-bar button{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--accent);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
@@ -227,12 +234,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="ck-month" id="ck-month-name"></div>
     </div>
     <div class="ck-stat">
-      <div class="ck-sv" id="ck-moy">—</div>
       <div class="ck-sl">Moyenne</div>
+      <div class="ck-sv" id="ck-moy">—</div>
     </div>
-    <div class="ck-stat" style="border-right:none">
-      <div class="ck-sv" id="ck-prev">—</div>
+    <div class="ck-stat">
       <div class="ck-sl" id="ck-prev-lbl">Mois préc.</div>
+      <div class="ck-sv" id="ck-prev">—</div>
     </div>
   </div>
 
@@ -404,7 +411,16 @@ async function chargerDonnees(){
       month:parseInt(r[6]),year:parseInt(r[7]),operateur:r[8]||''
     })).filter(d=>d.cat);
   }catch(e){toast('⚠️ Erreur connexion')}
-  loader(false);renderAll();
+  loader(false);
+  renderAll();
+  // Refresh la page active si ce n'est pas l'accueil
+  const activePage=document.querySelector('.page.active');
+  if(activePage){
+    const pid=activePage.id;
+    if(pid==='page-annee')renderAnnee();
+    if(pid==='page-anneecats')renderAnneeCats();
+    if(pid==='page-releve')renderReleve();
+  }
 }
 
 function showPage(p,btn){
