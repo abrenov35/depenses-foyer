@@ -591,8 +591,8 @@ function renderAnneeCats(){
     }).join('');
     const moisC=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.month)).size||1;
     h+=`<tr class="cat-row" style="background:${cat.color}"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>${rowCells}<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisC)}</td></tr>`;
-    // Postes détail (seulement si plus d'un poste)
-    if(cat.postes.length>1){
+    // Postes détail (toujours affiché)
+    if(true){
       const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYearCats).map(d=>d.poste))];
       postesUtilises.forEach(poste=>{
         let prs=0;
