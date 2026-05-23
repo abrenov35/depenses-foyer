@@ -3,28 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Dépenses Foyer</title>
+<title>Budget Clémence</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f4f1ec;--surface:#fff;--surface2:#faf8f5;--border:#e2dbd0;
-  --text:#1e1a14;--text2:#6b6157;--text3:#a89e93;
+  --bg:#f0ece4;--surface:#fff;--surface2:#faf7f2;--border:#ddd5c8;
+  --text:#1a1610;--text2:#5a5248;--text3:#8a8078;
   --accent:#c17f3a;--accent-light:#f5e9d8;--danger:#c0392b;
-  --shadow:0 2px 16px rgba(0,0,0,.07);--shadow-lg:0 8px 32px rgba(0,0,0,.12);
-  --r:14px;--r-sm:9px;
-  --nav-h:64px;
+  --shadow:0 2px 16px rgba(0,0,0,.08);--shadow-lg:0 8px 32px rgba(0,0,0,.14);
+  --r:14px;--r-sm:9px;--nav-h:64px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;overscroll-behavior:none;padding-bottom:var(--nav-h)}
 
-/* TOPBAR */
-.topbar{background:var(--text);color:#f4f1ec;padding:0 18px;display:flex;align-items:center;height:50px;position:sticky;top:0;z-index:100}
+.topbar{background:#12100d;color:#f4f1ec;padding:0 18px;display:flex;align-items:center;height:50px;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--accent)}
 .topbar-title{font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:1px}
 .topbar-title span{color:var(--accent)}
 
-/* NAV BAS */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--text);display:flex;align-items:center;justify-content:space-around;z-index:100;border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom)}
-.bnav-btn{background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 20px;border-radius:10px;transition:all .2s;color:#a89e93}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:#12100d;display:flex;align-items:center;justify-content:space-around;z-index:100;border-top:1px solid rgba(255,255,255,.1);padding-bottom:env(safe-area-inset-bottom)}
+.bnav-btn{background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 20px;border-radius:10px;transition:all .2s;color:#7a7060}
 .bnav-btn .bnav-icon{font-size:22px;line-height:1}
 .bnav-btn .bnav-label{font-size:10px;font-weight:500;letter-spacing:.5px;font-family:'DM Sans',sans-serif}
 .bnav-btn.active{color:var(--accent)}
@@ -32,134 +29,140 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 .container{max-width:600px;margin:0 auto;padding:14px 14px}
 
-/* LOADER */
-.loader-overlay{position:fixed;inset:0;background:rgba(244,241,236,.95);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
+.loader-overlay{position:fixed;inset:0;background:rgba(240,236,228,.95);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
 .loader-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* COCKPIT */
-.cockpit{background:var(--text);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow-lg);color:#f4f1ec}
-.cockpit-hero{margin-bottom:14px}
-.cockpit-hero .ch-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#a89e93;margin-bottom:2px}
-.cockpit-hero .ch-amount{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:var(--accent);line-height:1}
-.cockpit-hero .ch-month{font-size:12px;color:#a89e93;margin-top:3px}
-.cockpit-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cs-card{background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px}
-.cs-card .cs-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#f4f1ec}
-.cs-card .cs-lbl{font-size:10px;color:#a89e93;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+/* COCKPIT COMPACT — 3 stats alignées */
+.cockpit{background:#12100d;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:0;overflow:hidden}
+.ck-main{flex:1.4;padding-right:14px;border-right:1px solid rgba(255,255,255,.1)}
+.ck-main .ck-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#7a7060;margin-bottom:1px}
+.ck-main .ck-amount{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;color:var(--accent);line-height:1}
+.ck-main .ck-month{font-size:11px;color:#7a7060;margin-top:2px}
+.ck-stats{flex:1;display:flex;flex-direction:column;gap:8px;padding-left:14px}
+.ck-stat{display:flex;flex-direction:column}
+.ck-stat .ck-sv{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#f0ece4;line-height:1}
+.ck-stat .ck-sl{font-size:9px;color:#7a7060;text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+.ck-stat-sep{height:1px;background:rgba(255,255,255,.07);margin:0}
 
 /* MOIS NAV */
 .month-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.month-bar button{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--accent);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
-.month-lbl{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600}
+.month-bar button{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;width:36px;height:36px;cursor:pointer;color:var(--accent);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-weight:700}
+.month-lbl{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--text)}
 
-/* SAISIE */
-.quick-entry{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
-.qe-cats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
-.qe-cat{padding:9px 4px;text-align:center;cursor:pointer;transition:background .15s;font-size:10px;font-weight:500;color:var(--text2);border-right:1px solid var(--border);line-height:1.3}
+/* SAISIE — fond blanc pur, texte foncé, fort contraste */
+.quick-entry{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:1.5px solid var(--border)}
+.qe-cats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1.5px solid var(--border)}
+.qe-cat{padding:10px 4px;text-align:center;cursor:pointer;transition:all .15s;font-size:10px;font-weight:600;color:#3a3530;border-right:1px solid var(--border);line-height:1.3;background:#fff}
 .qe-cat:last-child{border-right:none}
-.qe-cat .qc-icon{font-size:16px;display:block;margin-bottom:2px}
-.qe-cat.active{color:#fff;font-weight:600}
+.qe-cat .qc-icon{font-size:17px;display:block;margin-bottom:3px}
+.qe-cat.active{color:#fff;font-weight:700}
+.qe-cat:not(.active):hover{background:#f5f0e8}
 
-.qe-body{padding:14px}
-.qe-poste-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:5px;font-weight:600}
-.qe-postes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qe-poste-btn{padding:5px 11px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap}
-.qe-poste-btn.active{color:#fff;border-color:transparent;font-weight:600}
-.qe-poste-btn.recent::before{content:'★ ';font-size:9px;opacity:.7}
+.qe-body{padding:14px;background:#fff}
+.qe-poste-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#6a6058;margin-bottom:6px;font-weight:700}
+.qe-postes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.qe-poste-btn{padding:6px 13px;border-radius:100px;border:2px solid #d0c8bc;background:#f5f0e8;cursor:pointer;font-size:12px;font-weight:600;color:#2a2520;transition:all .15s;white-space:nowrap}
+.qe-poste-btn.active{color:#fff;border-color:transparent;font-weight:700}
+.qe-poste-btn:not(.active):hover{border-color:var(--accent);color:var(--accent)}
+.qe-poste-btn.recent::before{content:'★ ';font-size:9px;opacity:.8}
 
-.qe-montant-row{display:flex;gap:9px;align-items:center;margin-bottom:9px}
+.qe-montant-row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
 .qe-montant-wrap{flex:1;position:relative}
-.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--text);background:var(--surface2);outline:none;transition:border-color .2s;-webkit-appearance:none}
-.qe-montant-wrap input:focus{border-color:var(--accent);background:#fff}
-.qe-montant-wrap .euro{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:17px;color:var(--text3);font-family:'Cormorant Garamond',serif}
-.btn-valider{background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 12px rgba(193,127,58,.4);transition:all .15s}
+.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2.5px solid #c0b8ac;border-radius:var(--r-sm);font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#1a1610;background:#f8f4ee;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.qe-montant-wrap input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(193,127,58,.15)}
+.qe-montant-wrap .euro{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;color:#8a8078;font-family:'Cormorant Garamond',serif;font-weight:600}
+.btn-valider{background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:13px 22px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 14px rgba(193,127,58,.5);transition:all .15s}
 .btn-valider:active{background:#a86830;transform:scale(.96)}
-.btn-valider:disabled{background:var(--text3);box-shadow:none}
+.btn-valider:disabled{background:#b0a898;box-shadow:none}
 
+/* Indicateur montant négatif */
+.neg-hint{font-size:11px;color:#8a8078;margin-bottom:8px;font-style:italic}
 .qe-options-row{display:flex;align-items:center;gap:8px}
-.btn-options{background:none;border:1px solid var(--border);border-radius:100px;padding:4px 11px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-options{background:none;border:1.5px solid #c0b8ac;border-radius:100px;padding:4px 12px;font-size:11px;color:#6a6058;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
 .btn-options.open{color:var(--accent);border-color:var(--accent)}
-.qe-extra{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.qe-extra{display:none;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--border)}
 .qe-extra.show{display:block}
-.qe-extra input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--surface2);outline:none;margin-bottom:7px}
+.qe-extra input{width:100%;padding:9px 12px;border:2px solid #c0b8ac;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:#1a1610;background:#f8f4ee;outline:none;margin-bottom:8px;font-weight:500}
 .qe-extra input:last-child{margin-bottom:0}
-.qe-extra input:focus{border-color:var(--accent)}
+.qe-extra input:focus{border-color:var(--accent);background:#fff}
 
 /* CARTES CATS */
 .cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
-.cat-card{background:var(--surface);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border-left:3px solid;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.cat-card{background:var(--surface);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border-left:3px solid;cursor:pointer;transition:transform .15s;border:1px solid var(--border);border-left:3px solid}
 .cat-card:active{transform:scale(.97)}
-.cat-card .cc-name{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.cat-card .cc-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 .cat-card .cc-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
 .cat-card .cc-moy{font-size:10px;color:var(--text3);margin-top:2px}
-.cat-card .cc-bar{height:3px;background:var(--border);border-radius:2px;margin-top:7px;overflow:hidden}
+.cat-card .cc-bar{height:3px;background:#e0d8cc;border-radius:2px;margin-top:7px;overflow:hidden}
 .cat-card .cc-bar-fill{height:100%;border-radius:2px;transition:width .4s}
-.cat-card .cc-state{font-size:10px;margin-top:3px;font-weight:500}
+.cat-card .cc-state{font-size:10px;margin-top:3px;font-weight:600}
 
 /* LISTE */
-.dep-section{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.dep-section{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden;border:1px solid var(--border)}
 .dep-section-hdr{display:flex;justify-content:space-between;align-items:center;padding:9px 15px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff}
 .dep-section-hdr .hdr-total{font-size:14px;font-weight:700}
 .dep-item{display:flex;align-items:center;padding:9px 15px;border-bottom:1px solid var(--border);gap:9px;transition:background .15s}
 .dep-item:last-child{border-bottom:none}
 .dep-item:active{background:var(--surface2)}
 .dep-item-info{flex:1;min-width:0}
-.dep-item-poste{font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dep-item-poste{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .dep-item-meta{font-size:11px;color:var(--text3);margin-top:1px}
 .dep-item-amount{font-weight:700;font-size:14px;white-space:nowrap}
-.dep-item-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:4px;border-radius:6px;flex-shrink:0}
+.dep-item-amount.negative{color:var(--danger)}
+.dep-item-del{background:none;border:none;cursor:pointer;color:#b0a898;font-size:18px;padding:4px;border-radius:6px;flex-shrink:0}
 .dep-item-del:active{color:var(--danger)}
 
-/* RECAP TABLES */
+/* RECAP */
 .section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:3px}
 .section-sub{color:var(--text2);font-size:12px;margin-bottom:16px}
 .recap-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.recap-tab{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s}
+.recap-tab{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);transition:all .2s}
 .recap-tab.active{background:var(--text);color:var(--accent);border-color:var(--text)}
 .recap-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:auto;box-shadow:var(--shadow);margin-bottom:14px}
 .recap-table table{width:100%;border-collapse:collapse}
-.recap-table th{background:var(--text);color:#f4f1ec;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;white-space:nowrap}
+.recap-table th{background:#12100d;color:#f4f1ec;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;white-space:nowrap}
 .recap-table th:first-child{text-align:left;min-width:150px;position:sticky;left:0;z-index:2}
 .recap-table td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap}
 .recap-table td:first-child{text-align:left;font-weight:500;position:sticky;left:0;background:var(--surface);z-index:1;border-right:1px solid var(--border)}
 .recap-table tr:hover td{background:var(--surface2)}
 .recap-table tr:hover td:first-child{background:var(--surface2)}
 .recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff}
-.recap-table .total-row td{background:var(--text)!important;color:var(--accent)!important;font-weight:700;font-size:12px}
-.zero{color:var(--text3)!important}
+.recap-table .total-row td{background:#12100d!important;color:var(--accent)!important;font-weight:700;font-size:12px}
+.zero{color:#b0a898!important}
 .cur{background:var(--accent-light)!important;font-weight:600}
+.neg-cell{color:var(--danger)!important;font-weight:600}
 
 /* ANNÉE */
 .year-nav{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.year-sel{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 13px;box-shadow:var(--shadow)}
+.year-sel{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:8px 13px;box-shadow:var(--shadow)}
 .year-sel button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:20px;padding:0 3px}
 .year-lbl{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--accent);min-width:60px;text-align:center}
-.cmp-btn{padding:7px 13px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s;box-shadow:var(--shadow)}
-.cmp-btn.active{background:var(--text);color:var(--accent);border-color:var(--text)}
+.cmp-btn{padding:7px 13px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);transition:all .2s;box-shadow:var(--shadow)}
+.cmp-btn.active{background:#12100d;color:var(--accent);border-color:#12100d}
 .year-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
 .year-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;box-shadow:var(--shadow);border-top:3px solid}
-.yc-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:3px}
+.yc-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px}
 .yc-amount{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700}
 .yc-moy{font-size:10px;color:var(--text3);margin-top:2px}
 .yc-cmp{font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid var(--border)}
-.up{color:#c0392b;font-weight:600}
-.down{color:#27ae60;font-weight:600}
+.up{color:#c0392b;font-weight:700}
+.down{color:#27ae60;font-weight:700}
 .eq{color:var(--text3)}
 
 /* GLISSANT */
 .glissant-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
 .glissant-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border-top:3px solid}
-.card-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:3px}
+.card-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px}
 .card-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
 .card-sub{font-size:10px;color:var(--text3);margin-top:2px}
 .card-moy{font-size:11px;color:var(--text2);margin-top:5px;padding-top:5px;border-top:1px solid var(--border)}
 
-.grand-total-card{background:var(--text);color:#f4f1ec;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.grand-total-card{background:#12100d;color:#f4f1ec;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Cormorant Garamond',serif;font-size:16px}
 .gt-amount{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--accent)}
 
-.toast{position:fixed;bottom:calc(var(--nav-h) + 10px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#f4f1ec;padding:9px 18px;border-radius:100px;font-size:13px;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
+.toast{position:fixed;bottom:calc(var(--nav-h) + 10px);left:50%;transform:translateX(-50%) translateY(20px);background:#12100d;color:#f4f1ec;padding:9px 18px;border-radius:100px;font-size:13px;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 .page{display:none}
@@ -172,9 +175,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="loader-overlay" id="loader"><div class="loader-spinner"></div></div>
 <div class="toast" id="toast"></div>
 
-<!-- TOPBAR simple -->
 <div class="topbar">
-  <div class="topbar-title">Foyer <span>·</span> Dépenses</div>
+  <div class="topbar-title">Clémence <span>·</span> Budget</div>
 </div>
 
 <div class="container">
@@ -182,21 +184,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- HOME -->
 <div class="page active" id="page-home">
 
-  <!-- COCKPIT 3 stats -->
+  <!-- COCKPIT COMPACT -->
   <div class="cockpit">
-    <div class="cockpit-hero">
-      <div class="ch-label">Ce mois</div>
-      <div class="ch-amount" id="ck-mois">—</div>
-      <div class="ch-month" id="ck-month-name"></div>
+    <div class="ck-main">
+      <div class="ck-label">Ce mois</div>
+      <div class="ck-amount" id="ck-mois">—</div>
+      <div class="ck-month" id="ck-month-name"></div>
     </div>
-    <div class="cockpit-stats">
-      <div class="cs-card">
-        <div class="cs-val" id="ck-moy">—</div>
-        <div class="cs-lbl">Moyenne / mois</div>
+    <div class="ck-stats">
+      <div class="ck-stat">
+        <div class="ck-sv" id="ck-moy">—</div>
+        <div class="ck-sl">Moyenne / mois</div>
       </div>
-      <div class="cs-card">
-        <div class="cs-val" id="ck-prev">—</div>
-        <div class="cs-lbl" id="ck-prev-lbl">Mois précédent</div>
+      <div class="ck-stat-sep"></div>
+      <div class="ck-stat">
+        <div class="ck-sv" id="ck-prev">—</div>
+        <div class="ck-sl" id="ck-prev-lbl">Mois précédent</div>
       </div>
     </div>
   </div>
@@ -208,23 +211,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button onclick="changeMonth(1)">›</button>
   </div>
 
-  <!-- SAISIE RAPIDE -->
+  <!-- SAISIE -->
   <div class="quick-entry">
     <div class="qe-cats" id="qe-cats-1"></div>
     <div class="qe-cats" id="qe-cats-2"></div>
     <div class="qe-body">
       <div class="qe-poste-label">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
+      <div class="neg-hint">💡 Montant négatif = remboursement (ex: −24)</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
-          <input type="number" id="f-montant" placeholder="0" min="0" step="0.01" inputmode="decimal">
+          <input type="number" id="f-montant" placeholder="0" step="0.01" inputmode="decimal">
           <span class="euro">€</span>
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
       </div>
       <div class="qe-options-row">
         <button class="btn-options" id="btn-opts" onclick="toggleOpts()">+ options</button>
-        <span style="font-size:11px;color:var(--text3)" id="f-date-display"></span>
+        <span style="font-size:11px;color:#8a8078" id="f-date-display"></span>
       </div>
       <div class="qe-extra" id="qe-extra">
         <input type="text" id="f-note" placeholder="Note / commentaire…">
@@ -233,10 +237,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-  <!-- CARTES CATS -->
   <div class="cat-cards" id="cat-cards"></div>
-
-  <!-- LISTE -->
   <div id="liste-depenses"></div>
 
 </div>
@@ -266,7 +267,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <div class="year-cards" id="year-cards"></div>
   <div class="grand-total-card" style="margin-bottom:14px">
-    <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="year-total-sub"></div></div>
+    <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:#7a7060;margin-top:2px" id="year-total-sub"></div></div>
     <div class="gt-amount" id="year-total">0,00 €</div>
   </div>
   <div class="recap-tabs">
@@ -282,7 +283,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <p class="section-sub" id="glissant-period"></p>
   <div class="glissant-grid" id="glissant-grid"></div>
   <div class="grand-total-card" style="margin-bottom:14px">
-    <div><div class="gt-label">Total 12 mois</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="glissant-moy-lbl"></div></div>
+    <div><div class="gt-label">Total 12 mois</div><div style="font-size:11px;color:#7a7060;margin-top:2px" id="glissant-moy-lbl"></div></div>
     <div class="gt-amount" id="glissant-total">0,00 €</div>
   </div>
   <div class="recap-table" id="glissant-table"></div>
@@ -290,28 +291,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 </div>
 
-<!-- NAV BAS -->
 <nav class="bottom-nav">
   <button class="bnav-btn active" onclick="showPage('home',this)">
-    <span class="bnav-icon">🏠</span>
-    <span class="bnav-label">Accueil</span>
+    <span class="bnav-icon">🏠</span><span class="bnav-label">Accueil</span>
   </button>
   <button class="bnav-btn" onclick="showPage('recap',this)">
-    <span class="bnav-icon">📊</span>
-    <span class="bnav-label">Récap</span>
+    <span class="bnav-icon">📊</span><span class="bnav-label">Récap</span>
   </button>
   <button class="bnav-btn" onclick="showPage('annee',this)">
-    <span class="bnav-icon">📅</span>
-    <span class="bnav-label">Année</span>
+    <span class="bnav-icon">📅</span><span class="bnav-label">Année</span>
   </button>
   <button class="bnav-btn" onclick="showPage('glissant',this)">
-    <span class="bnav-icon">📈</span>
-    <span class="bnav-label">12 mois</span>
+    <span class="bnav-icon">📈</span><span class="bnav-label">12 mois</span>
   </button>
 </nav>
 
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOVCNSyFGDpA3kWDjSmoKIbxTOcc5Xa6r7DIcD9_Tdf7rfDE/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxrClYCbtHHNnFQt_KtdJyilmwa0usVrZSBnFznf6aGa-jNr9FQbFOI4t1WzNzsWWFq1w/exec';
 
 const CATS=[
   {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Nettoyage','Mobilier','Décoration','Outillage','Petit électroménager']},
@@ -321,7 +317,7 @@ const CATS=[
   {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
   {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Animaux','Tabac','Autres']},
-  {id:'epargne',  label:'Épargne',   icon:'🏦',color:'#2e7d9a',postes:['Livret A / LDDS','Assurance vie','PEA / Bourse','Plan Épargne Retraite','Épargne logement (PEL/CEL)','Impôt sur le revenu','Taxe d\'habitation','Autres placements']},
+  {id:'clemence', label:'Clémence',  icon:'👩',color:'#9b6aa0',postes:['Clémence']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -446,7 +442,8 @@ async function addDepense(){
   const note=document.getElementById('f-note').value.trim();
   const dateVal=document.getElementById('f-date').value||new Date().toISOString().split('T')[0];
   const poste=selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
-  if(!montant||montant<=0){
+  // Accepter montants négatifs (remboursements) mais pas 0
+  if(isNaN(montant)||montant===0){
     document.getElementById('f-montant').style.borderColor='#c0392b';
     document.getElementById('f-montant').focus();
     setTimeout(()=>document.getElementById('f-montant').style.borderColor='',1500);return;
@@ -456,13 +453,14 @@ async function addDepense(){
   const btn=document.getElementById('btn-valider');btn.disabled=true;btn.textContent='…';
   const id=String(Date.now());
   try{
-    await jsonp({action:'add',id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'foyer'});
-    depenses.push({id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'foyer'});
+    await jsonp({action:'add',id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'clemence'});
+    depenses.push({id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'clemence'});
     addRecent(selCat,poste);
     document.getElementById('f-montant').value='';
     document.getElementById('f-note').value='';
     const cat=CATS.find(c=>c.id===selCat);
-    toast(`✓ ${cat.icon} ${poste} — ${fmt(montant)}`);
+    const prefix=montant<0?'↩️ Remboursement':'✓';
+    toast(`${prefix} ${cat.icon} ${poste} — ${fmt(montant)}`);
     renderHome();renderPostes();
   }catch(e){toast('⚠️ Erreur enregistrement')}
   btn.disabled=false;btn.textContent='✓ OK';
@@ -481,29 +479,19 @@ async function deleteDepense(id){
 function fmt(n){return(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
 function fmtS(n){return(n||0).toLocaleString('fr-FR',{minimumFractionDigits:0,maximumFractionDigits:0})+' €'}
 function fmtDate(s){if(!s||s.includes('T'))return'';try{const[y,m,d]=s.split('-');return`${d}/${m}`}catch{return''}}
-
-function getPrevMonth(){
-  let m=curMonth-1,y=curYear;
-  if(m<0){m=11;y--}
-  return{m,y};
-}
+function getPrevMonth(){let m=curMonth-1,y=curYear;if(m<0){m=11;y--}return{m,y}}
 
 function renderAll(){initSaisie();renderHome()}
 
 function renderHome(){
   document.getElementById('month-lbl').textContent=MFR[curMonth]+' '+curYear;
   document.getElementById('ck-month-name').textContent=MFR[curMonth]+' '+curYear;
-
   const md=depenses.filter(d=>d.month===curMonth&&d.year===curYear);
   const mTotal=md.reduce((s,d)=>s+d.montant,0);
-
-  // 12 mois glissants pour moyenne
   const sl=[];for(let i=11;i>=0;i--){let m=curMonth-i,y=curYear;while(m<0){m+=12;y--}sl.push({m,y})}
   const slTotal=depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
   const moisActifs=new Set(depenses.filter(d=>sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
   const moy=moisActifs>0?slTotal/moisActifs:0;
-
-  // Mois précédent
   const prev=getPrevMonth();
   const prevTotal=depenses.filter(d=>d.month===prev.m&&d.year===prev.y).reduce((s,d)=>s+d.montant,0);
 
@@ -512,23 +500,22 @@ function renderHome(){
   document.getElementById('ck-prev').textContent=fmtS(prevTotal);
   document.getElementById('ck-prev-lbl').textContent=MFR[prev.m].slice(0,4)+'. '+prev.y;
 
-  // Cartes cats
   const maxCat=Math.max(...CATS.map(c=>md.filter(d=>d.cat===c.id).reduce((s,d)=>s+d.montant,0)),1);
   document.getElementById('cat-cards').innerHTML=CATS.map(cat=>{
     const v=md.filter(d=>d.cat===cat.id).reduce((s,d)=>s+d.montant,0);
     const slv=depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).reduce((s,d)=>s+d.montant,0);
     const moisActifsCat=new Set(depenses.filter(d=>d.cat===cat.id&&sl.some(s=>s.m===d.month&&s.y===d.year)).map(d=>d.year+'-'+d.month)).size;
-    const moyC=moisActifsCat>0?slv/moisActifsCat:0,pct=maxCat>0?Math.round((v/maxCat)*100):0,dif=v-moyC;
+    const moyC=moisActifsCat>0?slv/moisActifsCat:0;
+    const pct=maxCat>0?Math.round((Math.abs(v)/maxCat)*100):0,dif=v-moyC;
     return`<div class="cat-card" style="border-left-color:${cat.color}" onclick="quickSelectCat('${cat.id}')">
       <div class="cc-name" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="cc-amount" style="color:${cat.color}">${v>0?fmtS(v):'—'}</div>
+      <div class="cc-amount" style="color:${v<0?'#c0392b':cat.color}">${v!==0?fmtS(v):'—'}</div>
       <div class="cc-moy">Moy : ${fmtS(moyC)}/mois</div>
       <div class="cc-bar"><div class="cc-bar-fill" style="width:${pct}%;background:${cat.color}88"></div></div>
-      ${v>0?`<div class="cc-state" style="color:${dif>0?'#c0392b':'#27ae60'}">${dif>0?'▲':'▼'} ${fmtS(Math.abs(dif))} vs moy</div>`:''}
+      ${v!==0?`<div class="cc-state" style="color:${dif>0?'#c0392b':'#27ae60'}">${dif>0?'▲':'▼'} ${fmtS(Math.abs(dif))} vs moy</div>`:''}
     </div>`;
   }).join('');
 
-  // Liste
   const liste=document.getElementById('liste-depenses');liste.innerHTML='';
   CATS.forEach(cat=>{
     const cd=md.filter(d=>d.cat===cat.id);
@@ -540,12 +527,13 @@ function renderHome(){
     sec.appendChild(hdr);
     cd.forEach(d=>{
       const item=document.createElement('div');item.className='dep-item';
+      const isNeg=d.montant<0;
       item.innerHTML=`
         <div class="dep-item-info">
-          <div class="dep-item-poste">${d.poste}</div>
+          <div class="dep-item-poste">${isNeg?'↩️ ':''} ${d.poste}</div>
           <div class="dep-item-meta">${fmtDate(d.date)}${d.note?' · '+d.note:''}</div>
         </div>
-        <div class="dep-item-amount" style="color:${cat.color}">${fmt(d.montant)}</div>
+        <div class="dep-item-amount ${isNeg?'negative':''}" style="${isNeg?'':'color:'+cat.color}">${fmt(d.montant)}</div>
         <button class="dep-item-del" onclick="deleteDepense('${d.id}')">×</button>`;
       sec.appendChild(item);
     });
@@ -553,12 +541,7 @@ function renderHome(){
   });
 }
 
-function quickSelectCat(id){
-  selCat=id;selPoste='';
-  initSaisie();
-  document.getElementById('f-montant').focus();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function quickSelectCat(id){selCat=id;selPoste='';initSaisie();document.getElementById('f-montant').focus();window.scrollTo({top:0,behavior:'smooth'})}
 
 function getMonths(){
   const s=new Set();
@@ -577,17 +560,17 @@ function renderRecap(){
   CATS.forEach(cat=>{
     if(recapView==='cats'){
       let rs=0;h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
-      months.forEach(ym=>{const v=sum(cat.id,null,ym);rs+=v;const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-      h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td></tr>`;
+      months.forEach(ym=>{const v=sum(cat.id,null,ym);rs+=v;const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''} ${v<0?'neg-cell':''}">${v===0?'—':fmtS(v)}</td>`});
+      h+=`<td style="font-weight:700;color:${rs<0?'#c0392b':cat.color}">${fmtS(rs)}</td></tr>`;
     }else{
       h+=`<tr class="cat-row"><td colspan="${months.length+2}" style="background:${cat.color}">${cat.icon} ${cat.label}</td></tr>`;
       cat.postes.forEach(poste=>{
         let rs=0,has=false;
-        const cells=months.map(ym=>{const v=sum(cat.id,poste,ym);rs+=v;if(v>0)has=true;return{v,ym}});
+        const cells=months.map(ym=>{const v=sum(cat.id,poste,ym);rs+=v;if(v!==0)has=true;return{v,ym}});
         if(!has)return;
         h+=`<tr><td style="padding-left:16px;font-size:11px">${poste}</td>`;
-        cells.forEach(({v,ym})=>{const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-        h+=`<td style="font-weight:600">${fmtS(rs)}</td></tr>`;
+        cells.forEach(({v,ym})=>{const a=ym===cYM;h+=`<td class="${a?'cur':''} ${v===0?'zero':''} ${v<0?'neg-cell':''}">${v===0?'—':fmtS(v)}</td>`});
+        h+=`<td style="font-weight:600;${rs<0?'color:#c0392b':''}">${fmtS(rs)}</td></tr>`;
       });
     }
   });
@@ -612,9 +595,9 @@ function renderAnnee(){
     const v=sy(cat.id,null,selYear),vp=sy(cat.id,null,prev);
     return`<div class="year-card" style="border-top-color:${cat.color}">
       <div class="yc-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="yc-amount" style="color:${cat.color}">${fmtS(v)}</div>
+      <div class="yc-amount" style="color:${v<0?'#c0392b':cat.color}">${fmtS(v)}</div>
       <div class="yc-moy">Moy/mois : ${fmtS(moisActifsAn>0?v/moisActifsAn:0)}</div>
-      ${compareMode&&vp>0?`<div class="yc-cmp">${diff(v,vp)} vs ${prev}<br><span style="color:var(--text3)">${prev} : ${fmtS(vp)}</span></div>`:''}
+      ${compareMode&&vp!==0?`<div class="yc-cmp">${diff(v,vp)} vs ${prev}<br><span style="color:var(--text3)">${prev} : ${fmtS(vp)}</span></div>`:''}
     </div>`;
   }).join('');
   renderAnneeTable();
@@ -631,19 +614,19 @@ function renderAnneeTable(){
   CATS.forEach(cat=>{
     if(anneeView==='cats'){
       let rs=0,rsp=0;h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
-      for(let m=0;m<12;m++){const v=sym(cat.id,null,selYear,m),vp=sym(cat.id,null,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`}
-      h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td>`;
+      for(let m=0;m<12;m++){const v=sym(cat.id,null,selYear,m),vp=sym(cat.id,null,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''} ${v<0?'neg-cell':''}">${v===0?'—':fmtS(v)}</td>`}
+      h+=`<td style="font-weight:700;color:${rs<0?'#c0392b':cat.color}">${fmtS(rs)}</td>`;
       if(compareMode)h+=`<td style="color:var(--text3)">${fmtS(rsp)}</td><td>${diff(rs,rsp)}</td>`;
       h+='</tr>';
     }else{
       h+=`<tr class="cat-row"><td colspan="${compareMode?15:13}" style="background:${cat.color}">${cat.icon} ${cat.label}</td></tr>`;
       cat.postes.forEach(poste=>{
         let rs=0,rsp=0,has=false;const cells=[];
-        for(let m=0;m<12;m++){const v=sym(cat.id,poste,selYear,m),vp=sym(cat.id,poste,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;if(v>0)has=true;cells.push({v,m})}
+        for(let m=0;m<12;m++){const v=sym(cat.id,poste,selYear,m),vp=sym(cat.id,poste,prev,m);rs+=v;rsp+=vp;mT[m]+=v;mTP[m]+=vp;if(v!==0)has=true;cells.push({v,m})}
         if(!has)return;
         h+=`<tr><td style="padding-left:14px;font-size:11px">${poste}</td>`;
-        cells.forEach(({v,m})=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-        h+=`<td style="font-weight:600">${fmtS(rs)}</td>`;
+        cells.forEach(({v,m})=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''} ${v===0?'zero':''} ${v<0?'neg-cell':''}">${v===0?'—':fmtS(v)}</td>`});
+        h+=`<td style="font-weight:600;${rs<0?'color:#c0392b':''}">${fmtS(rs)}</td>`;
         if(compareMode)h+=`<td style="color:var(--text3)">${fmtS(rsp)}</td><td>${diff(rs,rsp)}</td>`;
         h+='</tr>';
       });
@@ -669,11 +652,12 @@ function renderGlissant(){
   document.getElementById('glissant-moy-lbl').textContent=`Moyenne mensuelle (sur ${moisActifsGl} mois) : `+fmt(grand/moisActifsGl);
   document.getElementById('glissant-grid').innerHTML=CATS.map(cat=>{
     const total=depenses.filter(d=>d.cat===cat.id&&inSl(d)).reduce((s,d)=>s+d.montant,0);
+    const mCA=new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size||1;
     return`<div class="glissant-card" style="border-top-color:${cat.color}">
       <div class="card-cat" style="color:${cat.color}">${cat.icon} ${cat.label}</div>
-      <div class="card-amount" style="color:${cat.color}">${fmtS(total)}</div>
-      <div class="card-sub">sur 12 mois</div>
-      <div class="card-moy">Moy/mois : <strong>${fmtS(new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size>0?total/new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size:0)}</strong></div>
+      <div class="card-amount" style="color:${total<0?'#c0392b':cat.color}">${fmtS(total)}</div>
+      <div class="card-sub">sur ${moisActifsGl} mois</div>
+      <div class="card-moy">Moy/mois : <strong>${fmtS(total/mCA)}</strong></div>
     </div>`;
   }).join('');
   let h='<table><thead><tr><th>Catégorie</th>';
@@ -683,9 +667,9 @@ function renderGlissant(){
   CATS.forEach(cat=>{
     h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
     let rs=0;
-    sl.forEach((s,si)=>{const v=depenses.filter(d=>d.cat===cat.id&&d.month===s.m&&d.year===s.y).reduce((a,d)=>a+d.montant,0);rs+=v;mT[si]+=v;h+=`<td class="${v===0?'zero':''}">${v===0?'—':fmtS(v)}</td>`});
-    const moisActifsCatGl=new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size||1;
-    h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/moisActifsCatGl)}</td></tr>`;
+    sl.forEach((s,si)=>{const v=depenses.filter(d=>d.cat===cat.id&&d.month===s.m&&d.year===s.y).reduce((a,d)=>a+d.montant,0);rs+=v;mT[si]+=v;h+=`<td class="${v===0?'zero':''} ${v<0?'neg-cell':''}">${v===0?'—':fmtS(v)}</td>`});
+    const mCA=new Set(depenses.filter(d=>d.cat===cat.id&&inSl(d)).map(d=>d.year+'-'+d.month)).size||1;
+    h+=`<td style="font-weight:700;color:${rs<0?'#c0392b':cat.color}">${fmtS(rs)}</td><td style="color:${cat.color}">${fmtS(rs/mCA)}</td></tr>`;
   });
   h+='<tr class="total-row"><td>💰 TOTAL</td>';
   mT.forEach(v=>{h+=`<td>${fmtS(v)}</td>`});
