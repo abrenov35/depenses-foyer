@@ -178,7 +178,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#fff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#ffffff!important;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Inter',sans-serif;font-size:15px}
 .gt-amount{font-family:'Inter',sans-serif;font-size:24px;color:var(--accent)}
 
@@ -243,6 +243,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <span class="euro">€</span>
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
+        <button class="btn-annuler" id="btn-annuler" onclick="annulerDerniere()" title="Annuler la dernière saisie">↩</button>
       </div>
       <div class="qe-options-row">
         <button class="btn-options" id="btn-opts" onclick="toggleOpts()">+ options</button>
@@ -269,7 +270,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
   <div class="grand-total-card" style="margin-bottom:16px">
-    <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="year-total-sub"></div></div>
+    <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:rgba(255,255,255,.7);margin-top:2px" id="year-total-sub"></div></div>
     <div class="gt-amount" id="year-total">0,00 €</div>
   </div>
   <div class="recap-table" id="annee-mois-table"></div>
@@ -310,7 +311,7 @@ const CATS=[
   {id:'energie',  label:'Énergie',   icon:'⚡',color:'#0891b2',postes:['Électricité','Eau','Internet / Box','Téléphone mobile','Autre']},
   {id:'alim',     label:'Courses',   icon:'🛒',color:'#059669',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Autre']},
   {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#7c3aed',postes:['Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Sorties','Autre']},
-  {id:'transport',label:'Transport', icon:'🚗',color:'#162D49',postes:['Carburant','Assurance voiture','Réparation véhicule','Train / Avion','Vélo','Autre']},
+  {id:'transport',label:'Transport', icon:'🚗',color:'#162D49',postes:['Carburant','Assurance voiture','Réparation véhicule','Train / Avion','Autre']},
   {id:'sante',    label:'Santé',     icon:'❤️',color:'#be185d',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Autre']},
   {id:'divers',   label:'Divers',    icon:'📦',color:'#475569',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres','Autre']},
   {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#A495C3',postes:['Clémence','Autre']},
@@ -322,7 +323,7 @@ const MS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','D
 let curMonth=new Date().getMonth(),curYear=new Date().getFullYear();
 let selYear=new Date().getFullYear(),anneeView='cats';
 let selCat='alim',selPoste='';
-let depenses=[],cbN=0,optsOpen=false;
+let depenses=[],cbN=0,optsOpen=false,lastEntry=null;
 
 function getRecents(id){try{return JSON.parse(localStorage.getItem('rec_'+id)||'[]')}catch{return[]}}
 function addRecent(id,p){let r=getRecents(id).filter(x=>x!==p);r.unshift(p);localStorage.setItem('rec_'+id,JSON.stringify(r.slice(0,3)))}
@@ -412,7 +413,9 @@ function selectCat(id,el){
 function renderPostes(){
   const cat=CATS.find(c=>c.id===selCat);
   const recents=getRecents(selCat);
-  const displayed=[...new Set([...recents,...cat.postes])].slice(0,6);
+  const basePostes=cat.postes.filter(p=>p!=='Autre');
+  const displayed=[...new Set([...recents.filter(p=>p!=='Autre'),...basePostes])].slice(0,6);
+  if(!displayed.includes('Autre'))displayed.push('Autre');
   if(!selPoste||!displayed.includes(selPoste))selPoste=displayed[0]||cat.postes[0];
   const col=cat.color;
   document.getElementById('qe-postes').innerHTML=displayed.map(p=>{
@@ -446,7 +449,8 @@ async function addDepense(){
   const id=String(Date.now());
   try{
     await jsonp({action:'add',id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'foyer'});
-    depenses.push({id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'foyer'});
+    lastEntry={id,cat:selCat,poste,note,montant,date:dateVal,month:entryMonth,year:entryYear,operateur:'foyer'};
+    depenses.push(lastEntry);
     addRecent(selCat,poste);
     document.getElementById('f-montant').value='';
     document.getElementById('f-note').value='';
@@ -460,6 +464,19 @@ async function addDepense(){
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='f-montant')addDepense()});
+
+async function annulerDerniere(){
+  if(!lastEntry){toast('Aucune saisie à annuler');return;}
+  const btn=document.getElementById('btn-annuler');btn.disabled=true;
+  try{
+    await jsonp({action:'delete',id:String(lastEntry.id)});
+    depenses=depenses.filter(d=>d.id!==String(lastEntry.id));
+    toast('↩ Dernière saisie annulée — '+lastEntry.poste+' '+fmt(lastEntry.montant));
+    lastEntry=null;
+    renderHome();
+  }catch(e){toast('⚠️ Erreur annulation')}
+  btn.disabled=false;
+}
 
 async function deleteDepense(id){
   try{
