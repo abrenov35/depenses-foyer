@@ -129,7 +129,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .recap-table tr:hover td{background:#f0e8df}
 .recap-table tr:hover td:first-child{background:#f0e8df}
 .recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff!important;background:inherit!important}
-.recap-table .total-row td{background:#162D49!important;color:var(--accent)!important;font-weight:700;font-size:12px}
+.recap-table .total-row td{background:#162D49!important;color:#ffffff!important;font-weight:700;font-size:12px}
 .zero{color:#8a9aaa!important}
 .cur{background:#dde8f5!important;font-weight:600;color:#162D49!important}
 
@@ -178,7 +178,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#ffffff!important;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.grand-total-card{background:linear-gradient(135deg,#162D49,#1e4068);color:#ffffff!important;--text:#ffffff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Inter',sans-serif;font-size:15px}
 .gt-amount{font-family:'Inter',sans-serif;font-size:24px;color:var(--accent)}
 
@@ -245,12 +245,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
         <button class="btn-annuler" id="btn-annuler" onclick="annulerDerniere()" title="Annuler la dernière saisie">↩</button>
       </div>
+      <input type="text" id="f-note" placeholder="Note / commentaire (optionnel)" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;margin-bottom:8px">
       <div class="qe-options-row">
-        <button class="btn-options" id="btn-opts" onclick="toggleOpts()">+ options</button>
+        <button class="btn-options" id="btn-opts" onclick="toggleOpts()">📅 Date</button>
         <span style="font-size:11px;color:#8a9aaa" id="f-date-display"></span>
       </div>
       <div class="qe-extra" id="qe-extra">
-        <input type="text" id="f-note" placeholder="Note / commentaire…">
         <input type="date" id="f-date">
       </div>
     </div>
@@ -571,7 +571,7 @@ function renderAnneeCats(){
   const tA=mT.reduce((a,b)=>a+b,0);
   h+='<tr class="total-row"><td>💰 TOTAL</td>';
   mT.forEach((v,m)=>{const isc=selYearCats===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''}">${fmtS(v)}</td>`});
-  h+=`<td>${fmtS(tA)}</td><td>${fmtS(tA/moisActifs)}</td></tr></tbody></table>`;
+  h+=`<td style='color:#fff'>${fmtS(tA)}</td><td style='color:#fff'>${fmtS(tA/moisActifs)}</td></tr></tbody></table>`;
   document.getElementById('anneecats-table').innerHTML=h;
 }
 
@@ -609,7 +609,7 @@ function renderAnnee(){
 
   h+='<tr class="total-row"><td>💰 TOTAL</td>';
   moisAvecData.forEach(m=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''}">${fmtS(mT[m])}</td>`});
-  h+=`<td>${fmtS(grandTotal)}</td></tr></tbody></table>`;
+  h+=`<td style='color:#fff'>${fmtS(grandTotal)}</td></tr></tbody></table>`;
   document.getElementById('annee-mois-table').innerHTML=h;
 }
 
