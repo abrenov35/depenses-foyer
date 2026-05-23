@@ -229,6 +229,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="qe-body">
       <div class="qe-poste-label" id="qe-poste-label-wrap">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
+      <input type="text" id="f-note" placeholder="Note / commentaire" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;margin-bottom:8px">
       <div style="font-size:11px;color:#8a9aaa;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
@@ -237,7 +238,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
       </div>
-      <input type="text" id="f-note" placeholder="Note / commentaire (optionnel)" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;margin-bottom:8px">
       <div class="qe-options-row">
         <button class="btn-options" id="btn-opts" onclick="toggleOpts()">📅 Date</button>
         <span style="font-size:11px;color:#8a9aaa" id="f-date-display"></span>
