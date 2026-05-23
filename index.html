@@ -9,7 +9,7 @@
 :root{
   --bg:#f4f1ec;--surface:#fff;--surface2:#faf8f5;--border:#e2dbd0;
   --text:#1e1a14;--text2:#6b6157;--text3:#a89e93;
-  --accent:#c17f3a;--accent-light:#f5e9d8;--danger:#c0392b;
+  --accent:#2563eb;--accent-light:#dbeafe;--danger:#c0392b;
   --shadow:0 2px 16px rgba(0,0,0,.07);--shadow-lg:0 8px 32px rgba(0,0,0,.12);
   --r:14px;--r-sm:9px;
   --nav-h:64px;
@@ -87,7 +87,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .qe-extra input:last-child{margin-bottom:0}
 .qe-extra input:focus{border-color:var(--accent)}
 .libre-input{width:100%;padding:8px 12px;border:2.5px solid var(--accent);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:#1a1610;background:#fff;outline:none;margin-top:8px;font-weight:500}
-.libre-input::placeholder{color:#a89e93}
+.libre-input::placeholder{color:#999}
 
 /* CARTES CATS */
 .cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
@@ -178,7 +178,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-.grand-total-card{background:linear-gradient(135deg,#6c63ff,#9c94ff);color:#fff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.grand-total-card{background:linear-gradient(135deg,#1e40af,#2563eb);color:#fff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
 .gt-label{font-family:'Inter',sans-serif;font-size:15px}
 .gt-amount{font-family:'Inter',sans-serif;font-size:24px;color:var(--accent)}
 
@@ -236,9 +236,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="qe-body">
       <div class="qe-poste-label">Poste</div>
       <div class="qe-postes" id="qe-postes"></div>
-      <div id="libre-wrap" style="display:none">
-        <input type="text" class="libre-input" id="f-libre" placeholder="Saisissez votre libellé…" oninput="selPosteLibre=this.value">
-      </div>
       <div style="font-size:11px;color:#8a8078;margin-bottom:8px;font-style:italic">💡 Montant négatif = remboursement</div>
       <div class="qe-montant-row">
         <div class="qe-montant-wrap">
@@ -315,14 +312,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOVCNSyFGDpA3kWDjSmoKIbxTOcc5Xa6r7DIcD9_Tdf7rfDE/exec';
 
 const CATS=[
-  {id:'maison',   label:'Maison',    icon:'🏠',color:'#ff8c69',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager','Autre (libre)']},
-  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#fbbf24',postes:['Électricité','Eau','Internet / Box','Téléphone mobile','Autre (libre)']},
-  {id:'alim',     label:'Courses',   icon:'🛒',color:'#2dd4bf',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Autre (libre)']},
-  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#a78bfa',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties','Autre (libre)']},
-  {id:'transport',label:'Transport', icon:'🚗',color:'#60a5fa',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo','Autre (libre)']},
-  {id:'sante',    label:'Santé',     icon:'❤️',color:'#f87171',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Autre (libre)']},
-  {id:'divers',   label:'Divers',    icon:'📦',color:'#94a3b8',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres','Autre (libre)']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#34d399',postes:['Total','Autre (libre)']},
+  {id:'maison',   label:'Maison',    icon:'🏠',color:'#3b82f6',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager']},
+  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#0ea5e9',postes:['Électricité','Eau','Internet / Box','Téléphone mobile']},
+  {id:'alim',     label:'Courses',   icon:'🛒',color:'#10b981',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant']},
+  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#8b5cf6',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Hobbies','Sorties']},
+  {id:'transport',label:'Transport', icon:'🚗',color:'#6366f1',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Train / Avion','Vélo']},
+  {id:'sante',    label:'Santé',     icon:'❤️',color:'#ec4899',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle']},
+  {id:'divers',   label:'Divers',    icon:'📦',color:'#64748b',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#14b8a6',postes:['Total']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -421,15 +418,35 @@ function selectCat(id,el){
 function renderPostes(){
   const cat=CATS.find(c=>c.id===selCat);
   const recents=getRecents(selCat);
-  const displayed=[...new Set([...recents,...cat.postes])].slice(0,6);
-  if(!selPoste||!displayed.includes(selPoste))selPoste=displayed[0]||cat.postes[0];
-  document.getElementById('qe-postes').innerHTML=displayed.map(p=>{
-    const isR=recents.includes(p),isA=p===selPoste;
-    const col=CATS.find(c=>c.id===selCat).color;
-    return`<div class="qe-poste-btn${isA?' active':''}${isR?' recent':''}"
-      style="${isA?'background:'+col+';color:#fff;border-color:'+col:''}"
-      onclick="selectPoste('${p.replace(/'/g,"\\'")}',this)">${p}</div>`;
-  }).join('');
+  const col=cat.color;
+  // Postes normaux (max 5) + bouton Libre
+  const basePostes=cat.postes;
+  const displayed=[...new Set([...recents,...basePostes])].slice(0,5);
+  if(!selPoste||![...displayed,'__libre'].includes(selPoste))selPoste=displayed[0]||basePostes[0];
+  const isLibreActive=selPoste==='__libre';
+
+  document.getElementById('qe-postes').innerHTML=
+    displayed.map(p=>{
+      const isA=p===selPoste;
+      return`<div class="qe-poste-btn${isA?' active':''}${recents.includes(p)?' recent':''}"
+        style="${isA?'background:'+col+';color:#fff;border-color:'+col:''}"
+        onclick="selectPoste('${p.replace(/'/g,"\\'")}',this)">${p}</div>`;
+    }).join('')+
+    `<div class="qe-poste-btn${isLibreActive?' active':''}"
+      style="${isLibreActive?'background:'+col+';color:#fff;border-color:'+col:''}"
+      onclick="selectPoste('__libre',this)">✏️ Saisie libre</div>`;
+
+  // Afficher/masquer champ libre
+  let libreWrap=document.getElementById('libre-wrap');
+  if(!libreWrap){
+    libreWrap=document.createElement('div');
+    libreWrap.id='libre-wrap';
+    libreWrap.style.marginTop='8px';
+    libreWrap.innerHTML=`<input type="text" class="libre-input" id="f-libre" placeholder="Nom de la sous-catégorie…">`;
+    document.getElementById('qe-postes').after(libreWrap);
+  }
+  libreWrap.style.display=isLibreActive?'block':'none';
+  if(isLibreActive) setTimeout(()=>document.getElementById('f-libre')?.focus(),50);
 }
 
 function selectPoste(p,el){
@@ -444,7 +461,7 @@ async function addDepense(){
   const note=document.getElementById('f-note').value.trim();
   const dateVal=document.getElementById('f-date').value||new Date().toISOString().split('T')[0];
   const libreVal=document.getElementById('f-libre')?.value?.trim();
-  const poste=selPoste==='Autre (libre)'?(libreVal||'Autre'):selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
+  const poste=selPoste==='__libre'?(libreVal||'Autre'):selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
   if(isNaN(montant)||montant===0){
     document.getElementById('f-montant').style.borderColor='#c0392b';
     document.getElementById('f-montant').focus();
@@ -464,6 +481,7 @@ async function addDepense(){
     const cat=CATS.find(c=>c.id===selCat);
     const prefix=montant<0?'↩️ Remboursement':'✓';
     toast(`${prefix} ${cat.icon} ${poste} — ${fmt(montant)}`);
+    if(selPoste==='__libre')selPoste='';
     renderHome();renderPostes();
   }catch(e){toast('⚠️ Erreur enregistrement')}
   btn.disabled=false;btn.textContent='✓ OK';
