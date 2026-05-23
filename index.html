@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Dépenses Foyer</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f4f1ec;--surface:#fff;--surface2:#faf8f5;--border:#e2dbd0;
@@ -15,19 +15,19 @@
   --nav-h:64px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;overscroll-behavior:none;padding-bottom:var(--nav-h)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;overscroll-behavior:none;padding-bottom:var(--nav-h)}
 
 /* TOPBAR */
 .topbar{background:var(--accent);color:#fff;padding:0 18px;display:flex;align-items:center;height:50px;position:sticky;top:0;z-index:100}
-.topbar-title{font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:1px}
-.topbar-title span{color:rgba(255,255,255,.7)}
+.topbar-title{font-family:'Inter',sans-serif;font-size:16px;letter-spacing:1px}
+.topbar-title span{color:var(--accent)}
 
 /* NAV BAS */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--accent);display:flex;align-items:center;justify-content:space-around;z-index:100;border-top:1px solid rgba(255,255,255,.15);padding-bottom:env(safe-area-inset-bottom)}
 .bnav-btn{background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 20px;border-radius:10px;transition:all .2s;color:rgba(255,255,255,.6)}
 .bnav-btn .bnav-icon{font-size:22px;line-height:1}
-.bnav-btn .bnav-label{font-size:10px;font-weight:500;letter-spacing:.5px;font-family:'DM Sans',sans-serif}
-.bnav-btn.active{color:#fff}
+.bnav-btn .bnav-label{font-size:10px;font-weight:500;letter-spacing:.5px;font-family:'Inter',sans-serif}
+.bnav-btn.active{color:var(--accent)}
 .bnav-btn.active .bnav-icon{transform:scale(1.1)}
 
 .container{max-width:600px;margin:0 auto;padding:14px 14px}
@@ -41,23 +41,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cockpit{background:var(--text);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;overflow:hidden;color:#f4f1ec}
 .ck-main{padding-right:10px;border-right:1px solid rgba(255,255,255,.1);padding-bottom:0}
 .ck-main .ck-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#a89e93;margin-bottom:1px}
-.ck-main .ck-amount{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--accent);line-height:1}
+.ck-main .ck-amount{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:var(--accent);line-height:1}
 .ck-main .ck-month{font-size:11px;color:#a89e93;margin-top:2px}
 .ck-stats{display:contents}
 .ck-stat{display:flex;flex-direction:column;padding:0 10px;border-right:1px solid rgba(255,255,255,.1)}
-.ck-stat .ck-sv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#f4f1ec;line-height:1}
+.ck-stat .ck-sv{font-family:'Inter',sans-serif;font-size:19px;font-weight:600;color:#f4f1ec;line-height:1}
 .ck-stat .ck-sl{font-size:9px;color:#a89e93;text-transform:uppercase;letter-spacing:1px;margin-top:1px}
 
 
 /* MOIS NAV */
 .month-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .month-bar button{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--accent);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
-.month-lbl{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600}
+.month-lbl{font-family:'Inter',sans-serif;font-size:16px;font-weight:600}
 
 /* SAISIE */
 .quick-entry{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .qe-cats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
-.qe-cat{padding:9px 4px;text-align:center;cursor:pointer;transition:background .15s;font-size:10px;font-weight:600;color:#2a2520;border-right:1px solid var(--border);line-height:1.3;background:#fff}
+.qe-cat{padding:9px 4px;text-align:center;cursor:pointer;transition:all .15s;font-size:10px;font-weight:600;color:var(--text2);border-right:1px solid var(--border);line-height:1.3;background:var(--surface)}
 .qe-cat:last-child{border-right:none}
 .qe-cat .qc-icon{font-size:16px;display:block;margin-bottom:2px}
 .qe-cat.active{color:#fff;font-weight:600}
@@ -65,28 +65,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .qe-body{padding:14px}
 .qe-poste-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:5px;font-weight:600}
 .qe-postes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qe-poste-btn{padding:5px 11px;border-radius:100px;border:2px solid #c8c0b4;background:#f0ece4;cursor:pointer;font-size:12px;font-weight:600;color:#1e1a14;transition:all .15s;white-space:nowrap}
+.qe-poste-btn{padding:5px 11px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .15s;white-space:nowrap}
 .qe-poste-btn.active{color:#fff;border-color:transparent;font-weight:600}
 .qe-poste-btn.recent::before{content:'★ ';font-size:9px;opacity:.7}
 
 .qe-montant-row{display:flex;gap:9px;align-items:center;margin-bottom:9px}
 .qe-montant-wrap{flex:1;position:relative}
-.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2.5px solid #b8b0a4;border-radius:var(--r-sm);font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#1a1610;background:#f8f4ee;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.qe-montant-wrap input{width:100%;padding:13px 42px 13px 14px;border:2.5px solid #b8b0a4;border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:#1a1610;background:#f8f4ee;outline:none;transition:border-color .2s;-webkit-appearance:none}
 .qe-montant-wrap input:focus{border-color:var(--accent);background:#fff}
 .qe-montant-wrap .euro{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:17px;color:var(--text3);font-family:'Cormorant Garamond',serif}
-.btn-valider{background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 12px rgba(193,127,58,.4);transition:all .15s}
+.btn-valider{background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);padding:13px 20px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 3px 12px rgba(193,127,58,.4);transition:all .15s}
 .btn-valider:active{background:#a86830;transform:scale(.96)}
 .btn-valider:disabled{background:var(--text3);box-shadow:none}
 
 .qe-options-row{display:flex;align-items:center;gap:8px}
-.btn-options{background:none;border:1px solid var(--border);border-radius:100px;padding:4px 11px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-options{background:none;border:1px solid var(--border);border-radius:100px;padding:4px 11px;font-size:11px;color:var(--text3);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
 .btn-options.open{color:var(--accent);border-color:var(--accent)}
 .qe-extra{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .qe-extra.show{display:block}
-.qe-extra input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--surface2);outline:none;margin-bottom:7px}
+.qe-extra input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface2);outline:none;margin-bottom:7px}
 .qe-extra input:last-child{margin-bottom:0}
 .qe-extra input:focus{border-color:var(--accent)}
-.libre-input{width:100%;padding:8px 12px;border:2.5px solid var(--accent);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1610;background:#fff;outline:none;margin-top:8px;font-weight:500}
+.libre-input{width:100%;padding:8px 12px;border:2.5px solid var(--accent);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:14px;color:#1a1610;background:#fff;outline:none;margin-top:8px;font-weight:500}
 .libre-input::placeholder{color:#a89e93}
 
 /* CARTES CATS */
@@ -94,7 +94,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cat-card{background:var(--surface);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border-left:3px solid;cursor:pointer;transition:transform .15s,box-shadow .15s}
 .cat-card:active{transform:scale(.97)}
 .cat-card .cc-name{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.cat-card .cc-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
+.cat-card .cc-amount{font-family:'Inter',sans-serif;font-size:18px;font-weight:700}
 .cat-card .cc-moy{font-size:10px;color:var(--text3);margin-top:2px}
 .cat-card .cc-bar{height:3px;background:var(--border);border-radius:2px;margin-top:7px;overflow:hidden}
 .cat-card .cc-bar-fill{height:100%;border-radius:2px;transition:width .4s}
@@ -115,21 +115,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .dep-item-del:active{color:var(--danger)}
 
 /* RECAP TABLES */
-.section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:3px}
+.section-title{font-family:'Inter',sans-serif;font-size:19px;font-weight:600;margin-bottom:3px}
 .section-sub{color:var(--text2);font-size:12px;margin-bottom:16px}
 .recap-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .recap-tab{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s}
-.recap-tab.active{background:var(--text);color:var(--accent);border-color:var(--text)}
+.recap-tab.active{background:#1a1a1a;color:var(--accent);border-color:#1a1a1a}
 .recap-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:auto;box-shadow:var(--shadow);margin-bottom:14px}
 .recap-table table{width:100%;border-collapse:collapse}
-.recap-table th{background:var(--text);color:#f4f1ec;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;white-space:nowrap}
+.recap-table th{background:#1a1a1a;color:#f4f1ec;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;white-space:nowrap}
 .recap-table th:first-child{text-align:left;min-width:150px;position:sticky;left:0;z-index:2}
 .recap-table td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap}
 .recap-table td:first-child{text-align:left;font-weight:500;position:sticky;left:0;background:var(--surface);z-index:1;border-right:1px solid var(--border)}
 .recap-table tr:hover td{background:var(--surface2)}
 .recap-table tr:hover td:first-child{background:var(--surface2)}
 .recap-table .cat-row td{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#fff}
-.recap-table .total-row td{background:var(--text)!important;color:var(--accent)!important;font-weight:700;font-size:12px}
+.recap-table .total-row td{background:#1a1a1a!important;color:var(--accent)!important;font-weight:700;font-size:12px}
 .zero{color:var(--text3)!important}
 .cur{background:var(--accent-light)!important;font-weight:600}
 
@@ -138,17 +138,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .year-nav{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .year-sel{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 13px;box-shadow:var(--shadow)}
 .year-sel button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:20px;padding:0 3px}
-.year-lbl{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--accent);min-width:60px;text-align:center}
+.year-lbl{font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:var(--accent);min-width:60px;text-align:center}
 .cmp-btn{padding:7px 13px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);transition:all .2s;box-shadow:var(--shadow)}
 .cmp-btn.active{background:var(--text);color:var(--accent);border-color:var(--text)}
 
 /* Cartes mensuelles */
 .months-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
 .month-card{background:var(--surface);border-radius:var(--r);padding:12px 13px;box-shadow:var(--shadow);border:1px solid var(--border);border-left:3px solid var(--accent)}
-.month-card.current{border-left-color:var(--accent);background:var(--accent-light)}
+.month-card.current{border-left-color:var(--accent);background:#ede9ff}
 .mc-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .mc-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
-.mc-total{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--text)}
+.mc-total{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
 .mc-bars{display:flex;gap:2px;height:6px;border-radius:3px;overflow:hidden;background:var(--border)}
 .mc-bar{height:100%;transition:width .3s}
 .mc-empty{font-size:11px;color:var(--text3);font-style:italic}
@@ -163,7 +163,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .yci-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
 .yci-moy{font-size:11px;color:var(--text3);margin-top:1px}
 .yci-right{text-align:right;flex-shrink:0}
-.yci-amount{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
+.yci-amount{font-family:'Inter',sans-serif;font-size:18px;font-weight:700}
 .yci-arrow{font-size:12px;color:var(--text3);margin-top:2px;transition:transform .2s}
 .yci-arrow.open{transform:rotate(90deg)}
 .year-cat-detail{display:none;border-top:1px solid var(--border);background:var(--surface2)}
@@ -173,14 +173,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .ycd-poste-name{font-size:13px;font-weight:500;color:var(--text)}
 .ycd-months{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .ycd-month-pill{font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 7px;color:var(--text2)}
-.ycd-poste-total{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;flex-shrink:0;margin-left:10px}
+.ycd-poste-total{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;flex-shrink:0;margin-left:10px}
 .up{color:#c0392b;font-weight:600}
 .down{color:#27ae60;font-weight:600}
 .eq{color:var(--text3)}
 
-.grand-total-card{background:var(--text);color:#f4f1ec;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
-.gt-label{font-family:'Cormorant Garamond',serif;font-size:16px}
-.gt-amount{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--accent)}
+.grand-total-card{background:linear-gradient(135deg,#6c63ff,#9c94ff);color:#fff;border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-lg);margin-bottom:16px}
+.gt-label{font-family:'Inter',sans-serif;font-size:15px}
+.gt-amount{font-family:'Inter',sans-serif;font-size:24px;color:var(--accent)}
 
 .toast{position:fixed;bottom:calc(var(--nav-h) + 10px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#f4f1ec;padding:9px 18px;border-radius:100px;font-size:13px;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
@@ -268,7 +268,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <!-- ANNÉE -->
 <div class="page" id="page-annee">
-  <div class="section-title">Vue par année</div>
+  <div class="section-title">Année</div>
   <p class="section-sub" id="annee-sub"></p>
   <div class="year-nav">
     <div class="year-sel">
@@ -277,19 +277,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button onclick="changeYear(1)">›</button>
     </div>
   </div>
-  <!-- Total annuel -->
   <div class="grand-total-card" style="margin-bottom:16px">
     <div><div class="gt-label">Total annuel</div><div style="font-size:11px;color:#a89e93;margin-top:2px" id="year-total-sub"></div></div>
     <div class="gt-amount" id="year-total">0,00 €</div>
   </div>
-  <!-- Cartes 12 mois -->
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Les 12 mois</div>
-  <div class="months-grid" id="months-grid"></div>
-  <!-- Catégories cliquables -->
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Par catégorie</div>
-  <div class="year-cat-list" id="year-cat-list"></div>
-</div>
-
+  <div class="recap-table" id="annee-mois-table"></div>
 </div>
 
 <!-- ANNÉE PAR CATÉGORIE -->
@@ -309,16 +301,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- NAV BAS -->
 <nav class="bottom-nav">
   <button class="bnav-btn active" onclick="showPage('home',this)">
-    <span class="bnav-icon">🏠</span>
-    <span class="bnav-label">Accueil</span>
-  </button>
-  <button class="bnav-btn" onclick="showPage('recap',this)">
-    <span class="bnav-icon">📊</span>
-    <span class="bnav-label">Récap</span>
+    <span class="bnav-icon">🏠</span><span class="bnav-label">Accueil</span>
   </button>
   <button class="bnav-btn" onclick="showPage('annee',this)">
-    <span class="bnav-icon">📅</span>
-    <span class="bnav-label">Année</span>
+    <span class="bnav-icon">📅</span><span class="bnav-label">Année</span>
+  </button>
+  <button class="bnav-btn" onclick="showPage('anneecats',this)">
+    <span class="bnav-icon">📊</span><span class="bnav-label">Par catégorie</span>
   </button>
 </nav>
 
@@ -326,14 +315,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXjiAc6R48Um3_md1qZOVCNSyFGDpA3kWDjSmoKIbxTOcc5Xa6r7DIcD9_Tdf7rfDE/exec';
 
 const CATS=[
-  {id:'maison',   label:'Maison',    icon:'🏠',color:'#c17f3a',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager','Autre (libre)']},
-  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#d4a017',postes:['Électricité','Eau','Internet / Box','Téléphone fixe','Téléphone mobile','Autre (libre)']},
-  {id:'alim',     label:'Courses',   icon:'🛒',color:'#5a8a5a',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Autre (libre)']},
-  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#3a7fa8',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties','Autre (libre)']},
-  {id:'transport',label:'Transport', icon:'🚗',color:'#7a5aa8',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo','Autre (libre)']},
-  {id:'sante',    label:'Santé',     icon:'❤️',color:'#a85a5a',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Autre (libre)']},
-  {id:'divers',   label:'Divers',    icon:'📦',color:'#7a7a7a',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres','Autre (libre)']},
-  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#2e7d9a',postes:['Total','Autre (libre)']},
+  {id:'maison',   label:'Maison',    icon:'🏠',color:'#ff8c69',postes:['Taxe foncière','Assurance habitation','Entretien général','Réparations','Jardinage','Impôt salaire','Mobilier','Décoration','Outillage','Petit électroménager','Autre (libre)']},
+  {id:'energie',  label:'Énergie',   icon:'⚡',color:'#fbbf24',postes:['Électricité','Eau','Internet / Box','Téléphone fixe','Téléphone mobile','Autre (libre)']},
+  {id:'alim',     label:'Courses',   icon:'🛒',color:'#2dd4bf',postes:['Supermarché','Marché / Primeur','Boulangerie','Restaurant','Café / Bar','Autre (libre)']},
+  {id:'loisir',   label:'Loisirs',   icon:'🎉',color:'#a78bfa',postes:['Streaming','Cinéma / Concert','Sport / Fitness','Vacances','Livres / Presse','Jeux','Hobbies','Sorties','Autre (libre)']},
+  {id:'transport',label:'Transport', icon:'🚗',color:'#60a5fa',postes:['Carburant','Assurance voiture','Contrôle technique','Réparation véhicule','Péages','Parking','Train / Avion','Vélo','Autre (libre)']},
+  {id:'sante',    label:'Santé',     icon:'❤️',color:'#f87171',postes:['Médecin','Spécialiste','Pharmacie','Dentiste','Optique','Kiné','Mutuelle','Autre (libre)']},
+  {id:'divers',   label:'Divers',    icon:'📦',color:'#94a3b8',postes:['Coiffeur','Vêtements','Cosmétiques','Cadeaux','Autres','Autre (libre)']},
+  {id:'epargne',  label:'Clémence',  icon:'👩🏽',color:'#34d399',postes:['Total','Autre (libre)']},
 ];
 
 const MFR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -631,68 +620,38 @@ function renderAnnee(){
   document.getElementById('year-total').textContent=fmt(total);
   const moisActifsAn=new Set(depenses.filter(d=>d.year===selYear).map(d=>d.month)).size||1;
   document.getElementById('year-total-sub').textContent=`Moy/mois (sur ${moisActifsAn} mois) : ${fmtS(total/moisActifsAn)}`;
-  document.getElementById('annee-sub').textContent=`Bilan ${selYear} · cliquez une catégorie pour le détail`;
+  document.getElementById('annee-sub').textContent=selYear+' · total par catégorie et par mois';
 
-  // Cartes 12 mois
-  const maxMonth=Math.max(...Array.from({length:12},(_,m)=>depenses.filter(d=>d.year===selYear&&d.month===m).reduce((s,d)=>s+d.montant,0)),1);
-  document.getElementById('months-grid').innerHTML=Array.from({length:12},(_,m)=>{
-    const mTotal=depenses.filter(d=>d.year===selYear&&d.month===m).reduce((s,d)=>s+d.montant,0);
-    const isCur=selYear===curYear&&m===curMonth;
-    const pct=Math.round((mTotal/maxMonth)*100);
-    // Mini barres par cat
-    const catBars=CATS.map(cat=>{
-      const cv=depenses.filter(d=>d.year===selYear&&d.month===m&&d.cat===cat.id).reduce((s,d)=>s+d.montant,0);
-      const cpct=mTotal>0?Math.round((cv/mTotal)*100):0;
-      return cpct>0?`<div class="mc-bar" style="width:${cpct}%;background:${cat.color}"></div>`:'';
-    }).join('');
-    return`<div class="month-card${isCur?' current':''}">
-      <div class="mc-header">
-        <div class="mc-name">${MS[m]}</div>
-        <div class="mc-total" style="color:${mTotal===0?'var(--text3)':'var(--text)'}">${mTotal===0?'—':fmtS(mTotal)}</div>
-      </div>
-      ${mTotal>0?`<div class="mc-bars">${catBars}</div>`:'<div class="mc-empty">Pas de dépense</div>'}
-    </div>`;
-  }).join('');
+  // Tableau : lignes = catégories, colonnes = mois (seulement mois avec données)
+  const moisAvecData=[...new Set(depenses.filter(d=>d.year===selYear).map(d=>d.month))].sort((a,b)=>a-b);
+  if(moisAvecData.length===0){document.getElementById('annee-mois-table').innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-style:italic">Aucune dépense pour '+selYear+'</div>';return;}
 
-  // Catégories cliquables
-  document.getElementById('year-cat-list').innerHTML=CATS.map((cat,ci)=>{
+  let h='<table><thead><tr><th>Catégorie</th>';
+  moisAvecData.forEach(m=>{const isc=selYear===curYear&&m===curMonth;h+=`<th style="${isc?'background:var(--accent)':''}">${MS[m]}</th>`});
+  h+='<th style="background:#4a4a4a">Total</th></tr></thead><tbody>';
+
+  let mT={};moisAvecData.forEach(m=>mT[m]=0);let grandTotal=0;
+
+  CATS.forEach(cat=>{
     const v=sy(cat.id,null,selYear);
-    const moisActifsCat=new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYear).map(d=>d.month)).size||1;
-    // Postes utilisés cette année
-    const postesUtilises=[...new Set(depenses.filter(d=>d.cat===cat.id&&d.year===selYear).map(d=>d.poste))];
+    if(v===0)return;
+    h+=`<tr class="cat-row"><td style="background:${cat.color}">${cat.icon} ${cat.label}</td>`;
+    moisAvecData.forEach(m=>{
+      const mv=sym(cat.id,null,selYear,m);
+      mT[m]+=mv;
+      const isc=selYear===curYear&&m===curMonth;
+      h+=`<td class="${isc?'cur':''} ${mv===0?'zero':''}">${mv===0?'—':fmtS(mv)}</td>`;
+    });
+    h+=`<td style="font-weight:700;color:${cat.color}">${fmtS(v)}</td></tr>`;
+    grandTotal+=v;
+  });
 
-    const posteRows=postesUtilises.map(poste=>{
-      const pTotal=sy(cat.id,poste,selYear);
-      // Mois avec dépenses
-      const moisPills=Array.from({length:12},(_,m)=>{
-        const mv=sym(cat.id,poste,selYear,m);
-        return mv!==0?`<span class="ycd-month-pill" style="border-color:${cat.color}22;color:${cat.color}">${MS[m]} ${fmtS(mv)}</span>`:'';
-      }).filter(Boolean).join('');
-      return`<div class="ycd-poste">
-        <div style="flex:1;min-width:0">
-          <div class="ycd-poste-name">${poste}</div>
-          <div class="ycd-months">${moisPills||'<span style="font-size:10px;color:var(--text3)">—</span>'}</div>
-        </div>
-        <div class="ycd-poste-total" style="color:${pTotal<0?'#c0392b':cat.color}">${fmtS(pTotal)}</div>
-      </div>`;
-    }).join('');
-
-    return`<div class="year-cat-item">
-      <div class="year-cat-header" onclick="toggleCatDetail(${ci})">
-        <div class="yci-icon">${cat.icon}</div>
-        <div class="yci-info">
-          <div class="yci-name" style="color:${cat.color}">${cat.label}</div>
-          <div class="yci-moy">Moy : ${fmtS(moisActifsCat>0?v/moisActifsCat:0)}/mois</div>
-        </div>
-        <div class="yci-right">
-          <div class="yci-amount" style="color:${v===0?'var(--text3)':v<0?'#c0392b':cat.color}">${v===0?'—':fmtS(v)}</div>
-          ${postesUtilises.length>0?`<div class="yci-arrow" id="arrow-${ci}">›</div>`:''}
-        </div>
-      </div>
-      ${postesUtilises.length>0?`<div class="year-cat-detail" id="detail-${ci}">${posteRows}</div>`:''}
-    </div>`;
-  }).join('');
+  h+='<tr class="total-row"><td>💰 TOTAL</td>';
+  moisAvecData.forEach(m=>{const isc=selYear===curYear&&m===curMonth;h+=`<td class="${isc?'cur':''}">${fmtS(mT[m])}</td>`});
+  h+=`<td>${fmtS(grandTotal)}</td></tr></tbody></table>`;
+  document.getElementById('annee-mois-table').innerHTML=h;
 }
+
 
 function toggleCatDetail(ci){
   const detail=document.getElementById('detail-'+ci);
