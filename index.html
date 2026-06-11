@@ -238,12 +238,22 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <button class="btn-valider" id="btn-valider" onclick="addDepense()">✓ OK</button>
       </div>
-      <div class="qe-options-row">
-        <button class="btn-options" id="btn-opts" onclick="toggleOpts()">📅 Date</button>
-        <span style="font-size:11px;color:#8a9aaa" id="f-date-display"></span>
-      </div>
-      <div class="qe-extra" id="qe-extra">
-        <input type="date" id="f-date">
+      <div class="qe-options-row" style="margin-top:4px">
+        <label style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;flex-shrink:0">Mois</label>
+        <select id="f-mois" style="flex:1;margin-left:8px;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:var(--surface2);outline:none;">
+          <option value="0">Janvier</option>
+          <option value="1">Février</option>
+          <option value="2">Mars</option>
+          <option value="3">Avril</option>
+          <option value="4">Mai</option>
+          <option value="5">Juin</option>
+          <option value="6">Juillet</option>
+          <option value="7">Août</option>
+          <option value="8">Septembre</option>
+          <option value="9">Octobre</option>
+          <option value="10">Novembre</option>
+          <option value="11">Décembre</option>
+        </select>
       </div>
     </div>
   </div>
@@ -424,9 +434,7 @@ function toggleOpts(){
 
 function initSaisie(){
   const today=new Date().toISOString().split('T')[0];
-  document.getElementById('f-date').value=today;
-  const[y,m,d]=today.split('-');
-  document.getElementById('f-date-display').textContent=`${d}/${m}/${y}`;
+  document.getElementById('f-mois').value=new Date().getMonth();
 
   // Ligne 1 : 4 premières catégories
   document.getElementById('qe-cats-1').innerHTML=CATS.slice(0,4).map(c=>catBtn(c)).join('');
@@ -504,15 +512,16 @@ function selectPoste(p,el){
 async function addDepense(){
   const montant=parseFloat(document.getElementById('f-montant').value);
   const note=document.getElementById('f-note').value.trim();
-  const dateVal=document.getElementById('f-date').value||new Date().toISOString().split('T')[0];
+  const entryMonth=parseInt(document.getElementById('f-mois').value);
+  const entryYear=new Date().getFullYear();
+  const dateVal=entryYear+'-'+String(entryMonth+1).padStart(2,'0')+'-01';
   const poste=selPoste||(CATS.find(c=>c.id===selCat).postes[0]);
   if(isNaN(montant)||montant===0){
     document.getElementById('f-montant').style.borderColor='#c0392b';
     document.getElementById('f-montant').focus();
     setTimeout(()=>document.getElementById('f-montant').style.borderColor='',1500);return;
   }
-  const parts=dateVal.split('-');
-  const entryMonth=parseInt(parts[1])-1,entryYear=parseInt(parts[0]);
+  // entryMonth et entryYear déjà définis depuis le select
   const btn=document.getElementById('btn-valider');btn.disabled=true;btn.textContent='…';
   const id=String(Date.now());
   try{
